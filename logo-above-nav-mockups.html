@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Sourcely — masthead above the rail</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Fraunces:ital,wght@1,400;1,500&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --navy-deep: #003E54;
+    --navy: #005878;
+    --teal-deep: #2BA89B;
+    --teal: #40C0B8;
+    --cream: #F6F4EF;
+    --ink: #1F3A4A;
+    --muted: #6B8395;
+    --line: rgba(0, 88, 120, 0.14);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #EDEEEA; font-family: 'Nunito', sans-serif; color: var(--ink); }
+  .page { max-width: 1320px; margin: 0 auto; padding: 48px 32px 96px; }
+  .kicker { font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 0.74rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--teal-deep); margin-bottom: 14px; }
+  .page-title { font-family: 'Quicksand', sans-serif; font-weight: 600; font-size: clamp(1.6rem, 2.6vw, 2.2rem); color: var(--navy-deep); margin: 0 0 8px; line-height: 1.15; }
+  .page-sub { color: var(--muted); max-width: 720px; font-size: 0.98rem; line-height: 1.6; }
+
+  .grid { display: grid; grid-template-columns: 1fr; gap: 36px; margin-top: 36px; }
+  @media (min-width: 1000px) { .grid { grid-template-columns: 1fr 1fr; } }
+
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 20px; overflow: hidden; box-shadow: 0 22px 60px -32px rgba(0,62,84,0.18); }
+  .card-head { padding: 22px 26px 18px; border-bottom: 1px solid var(--line); display: flex; flex-direction: column; gap: 6px; }
+  .card-tag { font-family: 'Quicksand', sans-serif; font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 700; color: var(--teal-deep); }
+  .card-title { font-family: 'Quicksand', sans-serif; font-weight: 600; font-size: 1.18rem; color: var(--navy-deep); }
+  .card-desc { font-size: 0.92rem; color: var(--muted); line-height: 1.55; max-width: 560px; }
+
+  .preview { background: #fff; height: 420px; position: relative; overflow: hidden; }
+  .preview-inner { position: relative; height: 100%; transform: scale(0.62); transform-origin: top left; width: calc(100% / 0.62); }
+
+  /* MASTHEAD area placed ABOVE the rail */
+  .p-masthead {
+    width: 100%;
+    padding: 24px 36px 14px;
+    display: flex;
+    align-items: center;
+  }
+  .p-masthead.center { justify-content: center; }
+  .p-masthead.left { justify-content: flex-start; }
+  .p-masthead.right { justify-content: flex-end; }
+  .p-masthead img { width: auto; display: block; }
+  .p-masthead.lg img { height: 110px; max-width: 60%; }
+  .p-masthead.md img { height: 78px; }
+  .p-masthead.sm img { height: 48px; }
+  .p-masthead.xs img { height: 30px; }
+
+  /* Floating rail — sits below masthead, in static flow for mockup */
+  .p-rail {
+    margin: 6px auto 0;
+    width: min(820px, calc(100% - 60px));
+    height: 56px;
+    padding: 8px 12px 8px 22px;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: saturate(160%) blur(14px);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 16px 40px -16px rgba(0,62,84,0.18);
+  }
+  .p-rail-logo { height: 34px; width: auto; }
+  .p-rail-cities { flex: 1; text-align: center; font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 0.74rem; letter-spacing: 0.22em; color: var(--navy-deep); text-transform: lowercase; }
+  .p-rail-cities span { margin: 0 4px; color: var(--muted); }
+  .p-rail-cta { font-family: 'Quicksand', sans-serif; font-weight: 600; font-size: 0.86rem; color: #fff; background: var(--navy-deep); border-radius: 999px; padding: 10px 18px; display: flex; align-items: center; gap: 8px; }
+  .li-svg { width: 14px; height: 14px; }
+
+  /* Hero stub */
+  .p-hero { padding: 28px 40px 0; display: grid; grid-template-columns: 7fr 5fr; gap: 32px; }
+  .p-hero-eyebrow { font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 0.74rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--navy-deep); display: flex; gap: 12px; align-items: baseline; margin-bottom: 18px; }
+  .p-hero-eyebrow .n { color: var(--teal-deep); }
+  .p-hero-title { font-family: 'Quicksand', sans-serif; font-weight: 500; line-height: 1.02; letter-spacing: -0.02em; font-size: 3.4rem; color: var(--teal-deep); margin: 0; }
+  .p-hero-title em { font-style: normal; font-weight: 600; color: var(--navy-deep); }
+  .p-hero-aside { border-left: 1px solid var(--line); padding-left: 26px; font-family: 'Fraunces', serif; font-style: italic; color: var(--muted); font-size: 1rem; line-height: 1.6; padding-top: 6px; }
+
+  /* Hairline divider variant */
+  .p-divider { width: calc(100% - 80px); height: 1px; background: var(--line); margin: 4px auto 0; }
+  .p-banner {
+    background: var(--navy-deep);
+    color: #fff;
+    padding: 18px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .p-banner img { height: 44px; width: auto; filter: brightness(0) invert(1) hue-rotate(180deg) saturate(0); }
+  .p-banner-meta {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 700;
+    font-size: 0.72rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--teal);
+  }
+
+  .rec { margin-top: 64px; background: #fff; border: 1px solid var(--line); border-radius: 20px; padding: 30px 32px; display: flex; flex-direction: column; gap: 14px; }
+  .rec-eye { font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 0.72rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--teal-deep); }
+  .rec h3 { font-family: 'Quicksand', sans-serif; font-weight: 600; font-size: 1.4rem; color: var(--navy-deep); margin: 0; }
+  .rec p { margin: 0; color: var(--ink); font-size: 1rem; line-height: 1.65; max-width: 880px; }
+  .rec em { font-family: 'Fraunces', serif; font-style: italic; color: var(--teal-deep); }
+</style>
+</head>
+<body>
+  <div class="page">
+    <div class="kicker">Mockups · Wordmark above the rail</div>
+    <h1 class="page-title">Four ways to seat the wordmark above the floating nav</h1>
+    <p class="page-sub">Each card shows the top of the page with the wordmark placed above the rail, in a different size and alignment.</p>
+
+    <div class="grid">
+
+      <!-- 1 · Large centered -->
+      <div class="card">
+        <div class="card-head">
+          <span class="card-tag">Option 1 · Bold</span>
+          <div class="card-title">Large + centered above rail</div>
+          <div class="card-desc">Full wordmark at hero scale, centered. Rail tucks in just below. Reads like a magazine masthead — confident, but takes up the most vertical space.</div>
+        </div>
+        <div class="preview">
+          <div class="preview-inner">
+            <div class="p-masthead lg center"><img src="uploads/Sourcely_Logo.jpg" alt="" /></div>
+            <div class="p-rail">
+              <img class="p-rail-logo" src="uploads/Sourcely_Icon_Logo.png" alt="" />
+              <div class="p-rail-cities">nyc <span>·</span> orlando <span>·</span> barcelona <span>·</span> toronto <span>·</span> bogotá <span>·</span> zurich</div>
+              <div class="p-rail-cta">
+                <svg class="li-svg" viewBox="0 0 24 24" fill="#fff"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.49 6S0 4.88 0 3.5 1.11 1 2.49 1s2.49 1.12 2.49 2.5zM.22 8.98h4.55V24H.22zM8.07 8.98h4.36v2.05h.06c.61-1.15 2.09-2.36 4.3-2.36 4.6 0 5.45 3.03 5.45 6.96V24h-4.54v-7.42c0-1.77-.03-4.05-2.47-4.05-2.47 0-2.85 1.93-2.85 3.92V24H8.07z"/></svg>
+                Let's talk
+              </div>
+            </div>
+            <div class="p-hero">
+              <div>
+                <div class="p-hero-eyebrow"><span class="n">01</span> Trusted Talent Partners</div>
+                <h1 class="p-hero-title">Niche tech talent.<br/><em>Sourced with intention.</em></h1>
+              </div>
+              <div class="p-hero-aside">A US-based partner for niche tech roles.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2 · Medium centered -->
+      <div class="card">
+        <div class="card-head">
+          <span class="card-tag">Option 2 · Balanced (recommended)</span>
+          <div class="card-title">Medium + centered above rail</div>
+          <div class="card-desc">Wordmark at ~78px — present without dominating. The rail still reads as the primary nav. My pick — gives the wordmark a clear home without crowding the hero.</div>
+        </div>
+        <div class="preview">
+          <div class="preview-inner">
+            <div class="p-masthead md center"><img src="uploads/Sourcely_Logo.jpg" alt="" /></div>
+            <div class="p-rail">
+              <img class="p-rail-logo" src="uploads/Sourcely_Icon_Logo.png" alt="" />
+              <div class="p-rail-cities">nyc <span>·</span> orlando <span>·</span> barcelona <span>·</span> toronto <span>·</span> bogotá <span>·</span> zurich</div>
+              <div class="p-rail-cta">
+                <svg class="li-svg" viewBox="0 0 24 24" fill="#fff"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.49 6S0 4.88 0 3.5 1.11 1 2.49 1s2.49 1.12 2.49 2.5zM.22 8.98h4.55V24H.22zM8.07 8.98h4.36v2.05h.06c.61-1.15 2.09-2.36 4.3-2.36 4.6 0 5.45 3.03 5.45 6.96V24h-4.54v-7.42c0-1.77-.03-4.05-2.47-4.05-2.47 0-2.85 1.93-2.85 3.92V24H8.07z"/></svg>
+                Let's talk
+              </div>
+            </div>
+            <div class="p-hero">
+              <div>
+                <div class="p-hero-eyebrow"><span class="n">01</span> Trusted Talent Partners</div>
+                <h1 class="p-hero-title">Niche tech talent.<br/><em>Sourced with intention.</em></h1>
+              </div>
+              <div class="p-hero-aside">A US-based partner for niche tech roles.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 · Small left -->
+      <div class="card">
+        <div class="card-head">
+          <span class="card-tag">Option 3 · Editorial</span>
+          <div class="card-title">Small + left, hairline under</div>
+          <div class="card-desc">Wordmark sits compactly in the top-left like a brand bug. A hairline rule separates it from the rail. Feels like a publication masthead.</div>
+        </div>
+        <div class="preview">
+          <div class="preview-inner">
+            <div class="p-masthead sm left"><img src="uploads/Sourcely_Logo.jpg" alt="" /></div>
+            <div class="p-divider"></div>
+            <div class="p-rail" style="margin-top: 14px;">
+              <img class="p-rail-logo" src="uploads/Sourcely_Icon_Logo.png" alt="" />
+              <div class="p-rail-cities">nyc <span>·</span> orlando <span>·</span> barcelona <span>·</span> toronto <span>·</span> bogotá <span>·</span> zurich</div>
+              <div class="p-rail-cta">
+                <svg class="li-svg" viewBox="0 0 24 24" fill="#fff"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.49 6S0 4.88 0 3.5 1.11 1 2.49 1s2.49 1.12 2.49 2.5zM.22 8.98h4.55V24H.22zM8.07 8.98h4.36v2.05h.06c.61-1.15 2.09-2.36 4.3-2.36 4.6 0 5.45 3.03 5.45 6.96V24h-4.54v-7.42c0-1.77-.03-4.05-2.47-4.05-2.47 0-2.85 1.93-2.85 3.92V24H8.07z"/></svg>
+                Let's talk
+              </div>
+            </div>
+            <div class="p-hero">
+              <div>
+                <div class="p-hero-eyebrow"><span class="n">01</span> Trusted Talent Partners</div>
+                <h1 class="p-hero-title">Niche tech talent.<br/><em>Sourced with intention.</em></h1>
+              </div>
+              <div class="p-hero-aside">A US-based partner for niche tech roles.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 · Banner navy strip -->
+      <div class="card">
+        <div class="card-head">
+          <span class="card-tag">Option 4 · Distinctive</span>
+          <div class="card-title">Navy banner strip + rail below</div>
+          <div class="card-desc">A dark navy banner caps the page with the wordmark + a marketing meta line on the right. Rail floats below in the cream zone. Strongest visual identity, most "branded".</div>
+        </div>
+        <div class="preview">
+          <div class="preview-inner">
+            <div class="p-banner">
+              <img src="uploads/Sourcely_Logo.jpg" alt="" />
+              <div class="p-banner-meta">Veteran-owned · Founder-led · Global</div>
+            </div>
+            <div class="p-rail" style="margin-top: 22px;">
+              <img class="p-rail-logo" src="uploads/Sourcely_Icon_Logo.png" alt="" />
+              <div class="p-rail-cities">nyc <span>·</span> orlando <span>·</span> barcelona <span>·</span> toronto <span>·</span> bogotá <span>·</span> zurich</div>
+              <div class="p-rail-cta">
+                <svg class="li-svg" viewBox="0 0 24 24" fill="#fff"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.49 6S0 4.88 0 3.5 1.11 1 2.49 1s2.49 1.12 2.49 2.5zM.22 8.98h4.55V24H.22zM8.07 8.98h4.36v2.05h.06c.61-1.15 2.09-2.36 4.3-2.36 4.6 0 5.45 3.03 5.45 6.96V24h-4.54v-7.42c0-1.77-.03-4.05-2.47-4.05-2.47 0-2.85 1.93-2.85 3.92V24H8.07z"/></svg>
+                Let's talk
+              </div>
+            </div>
+            <div class="p-hero" style="padding-top: 18px;">
+              <div>
+                <div class="p-hero-eyebrow"><span class="n">01</span> Trusted Talent Partners</div>
+                <h1 class="p-hero-title">Niche tech talent.</h1>
+              </div>
+              <div class="p-hero-aside">A US-based partner for niche tech roles.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="rec">
+      <span class="rec-eye">My recommendation</span>
+      <h3>Option 2 — medium + centered.</h3>
+      <p>Big enough to feel intentional, small enough not to push the hero down a screen. The wordmark and the rail share the page's center axis, which gives the top a clean vertical rhythm: <em>wordmark</em> → <em>nav</em> → <em>hero</em>. If you want more drama, Option 4 (navy banner) is the stronger statement; if you want it understated, Option 3 (small left) reads as a brand bug.</p>
+    </div>
+  </div>
+</body>
+</html>

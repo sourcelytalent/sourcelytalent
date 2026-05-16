@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Sourcely — masthead placement options</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Fraunces:ital,wght@1,400;1,500&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --navy-deep: #003E54;
+    --navy: #005878;
+    --teal-deep: #2BA89B;
+    --teal: #40C0B8;
+    --cream: #F6F4EF;
+    --ink: #1F3A4A;
+    --muted: #6B8395;
+    --line: rgba(0, 88, 120, 0.14);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #EDEEEA; font-family: 'Nunito', sans-serif; color: var(--ink); }
+
+  .page {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 48px 32px 96px;
+  }
+  .page-head {
+    margin-bottom: 32px;
+  }
+  .kicker {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 700;
+    font-size: 0.74rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--teal-deep);
+    margin-bottom: 14px;
+  }
+  .page-title {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 600;
+    font-size: clamp(1.6rem, 2.6vw, 2.2rem);
+    color: var(--navy-deep);
+    margin: 0 0 8px;
+    line-height: 1.15;
+  }
+  .page-sub {
+    color: var(--muted);
+    max-width: 720px;
+    font-size: 0.98rem;
+    line-height: 1.6;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 36px;
+    margin-top: 36px;
+  }
+  @media (min-width: 1000px) {
+    .grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  .card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 22px 60px -32px rgba(0,62,84,0.18);
+  }
+  .card-head {
+    padding: 22px 26px 18px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .card-tag {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--teal-deep);
+  }
+  .card-title {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 600;
+    font-size: 1.18rem;
+    color: var(--navy-deep);
+  }
+  .card-desc {
+    font-size: 0.92rem;
+    color: var(--muted);
+    line-height: 1.55;
+    max-width: 560px;
+  }
+
+  /* ── Site preview frame ── */
+  .preview {
+    background: #fff;
+    height: 380px;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .preview-inner {
+    position: relative;
+    height: 100%;
+    transform: scale(0.62);
+    transform-origin: top left;
+    width: calc(100% / 0.62);
+  }
+
+  /* Floating rail (scaled-down site nav) */
+  .p-rail {
+    position: absolute;
+    top: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(820px, calc(100% - 60px));
+    height: 56px;
+    padding: 8px 12px 8px 22px;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: saturate(160%) blur(14px);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 16px 40px -16px rgba(0,62,84,0.18);
+    z-index: 5;
+  }
+  .p-rail-logo {
+    height: 34px;
+    width: auto;
+  }
+  .p-rail-cities {
+    flex: 1;
+    text-align: center;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 700;
+    font-size: 0.74rem;
+    letter-spacing: 0.22em;
+    color: var(--navy-deep);
+    text-transform: lowercase;
+  }
+  .p-rail-cities span { margin: 0 4px; color: var(--muted); }
+  .p-rail-cta {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 600;
+    font-size: 0.86rem;
+    color: #fff;
+    background: var(--navy-deep);
+    border-radius: 999px;
+    padding: 10px 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .li-svg { width: 14px; height: 14px; }
+
+  /* Masthead area */
+  .p-masthead {
+    margin-top: 96px;
+    padding: 24px 36px 8px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+  .p-masthead img {
+    height: 122px;
+    width: auto;
+    max-width: 60%;
+    display: block;
+  }
+  .p-masthead.center { justify-content: center; }
+  .p-masthead.left   { justify-content: flex-start; }
+  .p-masthead.right  { justify-content: flex-end; }
+  .p-masthead.small img { height: 56px; }
+  .p-masthead.tiny img  { height: 36px; opacity: 0.9; }
+
+  /* Hero stub */
+  .p-hero {
+    padding: 18px 40px 0;
+    display: grid;
+    grid-template-columns: 7fr 5fr;
+    gap: 32px;
+  }
+  .p-hero-eyebrow {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 700;
+    font-size: 0.74rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--navy-deep);
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+    margin-bottom: 18px;
+  }
+  .p-hero-eyebrow .n { color: var(--teal-deep); }
+  .p-hero-title {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 500;
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    font-size: 3.4rem;
+    color: var(--teal-deep);
+    margin: 0;
+  }
+  .p-hero-title em {
+    font-style: normal;
+    font-weight: 600;
+    color: var(--navy-deep);
+  }
+  .p-hero-aside {
+    border-left: 1px solid var(--line);
+    padding-left: 26px;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.6;
+    padding-top: 6px;
+  }
+
+  /* Variant E — wordmark eyebrow strip */
+  .p-strip {
+    margin-top: 90px;
+    padding: 18px 40px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .p-strip img {
+    height: 26px;
+    width: auto;
+  }
+  .p-strip-est {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 700;
+    font-size: 0.72rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* Variant D — masthead inside hero column */
+  .p-hero.inside {
+    padding-top: 24px;
+  }
+  .p-hero.inside .p-hero-mastline {
+    grid-column: 1 / -1;
+    margin: 0 0 28px;
+  }
+  .p-hero.inside .p-hero-mastline img {
+    height: 110px;
+    width: auto;
+    display: block;
+  }
+
+  /* Recommendation card */
+  .rec {
+    margin-top: 64px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 30px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .rec-eye {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 700;
+    font-size: 0.72rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--teal-deep);
+  }
+  .rec h3 {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 600;
+    font-size: 1.4rem;
+    color: var(--navy-deep);
+    margin: 0;
+  }
+  .rec p {
+    margin: 0;
+    color: var(--ink);
+    font-size: 1rem;
+    line-height: 1.65;
+    max-width: 880px;
+  }
+  .rec em {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    color: var(--teal-deep);
+  }
+</style>
+</head>
+<body>
+  <div class="page">
+    <div class="page-head">
+      <div class="kicker">Mockups · Masthead placement</div>
+      <h1 class="page-title">Five ways to handle the top wordmark</h1>
+      <p class="page-sub">The rail already shows the brand mark — so the big masthead below it is doing double duty. Here are five ways to relieve that tension. Each card shows the top of the page in that variation.</p>
+    </div>
+
+    <div class="grid">
+
+      <!-- A · NO MASTHEAD -->
+      <div class="card">
+        <div class="card-head">
+          <span class="card-tag">Option A · Strongest recommendation</span>
+          <div class="card-title">Hide the masthead entirely</div>
+          <div class="card-desc">The floating rail already carries the smiley mark — the giant wordmark below is redundant. Hero leads immediately and the page feels editorial, not corporate.</div>
+        </div>
+        <div class="preview">
+          <div class="preview-inner">
+            <div class="p-rail">
+              <img class="p-rail-logo" src="uploads/Sourcely_Icon_Logo.png" alt="" />
+              <div class="p-rail-cities">nyc <span>·</span> orlando <span>·</span> barcelona <span>·</span> toronto <span>·</span> bogotá <span>·</span> zurich</div>
+              <div class="p-rail-cta">
+                <svg class="li-svg" viewBox="0 0 24 24" fill="#fff"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.49 6S0 4.88 0 3.5 1.11 1 2.49 1s2.49 1.12 2.49 2.5zM.22 8.98h4.55V24H.22zM8.07 8.98h4.36v2.05h.06c.61-1.15 2.09-2.36 4.3-2.36 4.6 0 5.45 3.03 5.45 6.96V24h-4.54v-7.42c0-1.77-.03-4.05-2.47-4.05-2.47 0-2.85 1.93-2.85 3.92V24H8.07z"/></svg>
+                Let's talk
+              </div>
+            </div>
+            <div class="p-hero" style="padding-top: 132px;">
+              <div>
+                <div class="p-hero-eyebrow"><span class="n">01</span> Trusted Talent Partners</div>
+                <h1 class="p-hero-title">Niche tech talent.<br/><em>Sourced with intention.</em></h1>
+              </div>
+              <div class="p-hero-aside">A US-based partner for niche tech roles — with a network spanning six cities and three continents.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- B · SMALL CENTERED -->
+      <div class="card">
+        <div class="card-head">
+          <span class="card-tag">Option B</span>
+          <div class="card-title">Small + centered, as a header rule</div>
+          <div class="card-desc">Keep the wordmark, but shrink it to ~56px and center it. Reads as a quiet masthead, doesn't compete with the rail logo's smiley.</div>
+        </div>
+        <div class="preview">
+          <div class="preview-inner">
+            <div class="p-rail">
+              <img class="p-rail-logo" src="uploads/Sourcely_Icon_Logo.png" alt="" />
+              <div class="p-rail-cities">nyc <span>·</span> orlando <span>·</span> barcelona <span>·</span> toronto <span>·</span> bogotá <span>·</span> zurich</div>
+              <div class="p-rail-cta">
+                <svg class="li-svg" viewBox="0 0 24 24" fill="#fff"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.49 6S0 4.88 0 3.5 1.11 1 2.49 1s2.49 1.12 2.49 2.5zM.22 8.98h4.55V24H.22zM8.07 8.98h4.36v2.05h.06c.61-1.15 2.09-2.36 4.3-2.36 4.6 0 5.45 3.03 5.45 6.96V24h-4.54v-7.42c0-1.77-.03-4.05-2.47-4.05-2.47 0-2.85 1.93-2.85 3.92V24H8.07z"/></svg>
+                Let's talk
+              </div>
+            </div>
+            <div class="p-masthead center small">
+              <img src="uploads/Sourcely_Logo.jpg" alt="" />
+            </div>
+            <div class="p-hero">
+              <div>
+                <div class="p-hero-eyebrow"><span class="n">01</span> Trusted Talent Partners</div>
+                <h1 class="p-hero-title">Niche tech talent.<br/><em>Sourced with intention.</em></h1>
+              </div>
+              <div class="p-hero-aside">A US-based partner for niche tech roles — with a network spanning six cities and three continents.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- C · INSIDE HERO -->
+      <div class="card">
+        <div class="card-head">
+          <span class="card-tag">Option C</span>
+          <div class="card-title">Anchor it inside the hero column</div>
+          <div class="card-desc">Move the wordmark into the hero grid as the first element. It becomes part of the editorial composition rather than a separate band — and the smiley in "Sourcely" plays off the smiley in "Niche tech."</div>
+        </div>
+        <div class="preview">
+          <div class="preview-inner">
+            <div class="p-rail">
+              <img class="p-rail-logo" src="uploads/Sourcely_Icon_Logo.png" alt="" />
+              <div class="p-rail-cities">nyc <span>·</span> orlando <span>·</span> barcelona <span>·</span> toronto <span>·</span> bogotá <span>·</span> zurich</div>
+              <div class="p-rail-cta">
+                <svg class="li-svg" viewBox="0 0 24 24" fill="#fff"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.49 6S0 4.88 0 3.5 1.11 1 2.49 1s2.49 1.12 2.49 2.5zM.22 8.98h4.55V24H.22zM8.07 8.98h4.36v2.05h.06c.61-1.15 2.09-2.36 4.3-2.36 4.6 0 5.45 3.03 5.45 6.96V24h-4.54v-7.42c0-1.77-.03-4.05-2.47-4.05-2.47 0-2.85 1.93-2.85 3.92V24H8.07z"/></svg>
+                Let's talk
+              </div>
+            </div>
+            <div class="p-hero inside" style="padding-top: 122px;">
+              <div class="p-hero-mastline">
+                <img src="uploads/Sourcely_Logo.jpg" alt="" />
+              </div>
+              <div>
+                <div class="p-hero-eyebrow"><span class="n">01</span> Trusted Talent Partners</div>
+                <h1 class="p-hero-title">Niche tech talent.<br/><em>Sourced with intention.</em></h1>
+              </div>
+              <div class="p-hero-aside">A US-based partner for niche tech roles.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- D · WORDMARK STRIP -->
+      <div class="card">
+        <div class="card-head">
+          <span class="card-tag">Option D</span>
+          <div class="card-title">Wordmark eyebrow strip</div>
+          <div class="card-desc">Shrink to ~26px and pair with an "Est. · global" line on the right. Functions as a quiet brand bar — like a magazine masthead — under the floating rail.</div>
+        </div>
+        <div class="preview">
+          <div class="preview-inner">
+            <div class="p-rail">
+              <img class="p-rail-logo" src="uploads/Sourcely_Icon_Logo.png" alt="" />
+              <div class="p-rail-cities">nyc <span>·</span> orlando <span>·</span> barcelona <span>·</span> toronto <span>·</span> bogotá <span>·</span> zurich</div>
+              <div class="p-rail-cta">
+                <svg class="li-svg" viewBox="0 0 24 24" fill="#fff"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.49 6S0 4.88 0 3.5 1.11 1 2.49 1s2.49 1.12 2.49 2.5zM.22 8.98h4.55V24H.22zM8.07 8.98h4.36v2.05h.06c.61-1.15 2.09-2.36 4.3-2.36 4.6 0 5.45 3.03 5.45 6.96V24h-4.54v-7.42c0-1.77-.03-4.05-2.47-4.05-2.47 0-2.85 1.93-2.85 3.92V24H8.07z"/></svg>
+                Let's talk
+              </div>
+            </div>
+            <div class="p-strip">
+              <img src="uploads/Sourcely_Logo.jpg" alt="" />
+              <div class="p-strip-est">Veteran-owned · Founder-led · Global</div>
+            </div>
+            <div class="p-hero" style="padding-top: 28px;">
+              <div>
+                <div class="p-hero-eyebrow"><span class="n">01</span> Trusted Talent Partners</div>
+                <h1 class="p-hero-title">Niche tech talent.<br/><em>Sourced with intention.</em></h1>
+              </div>
+              <div class="p-hero-aside">A US-based partner for niche tech roles.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- E · LARGE CENTERED (current default-ish) -->
+      <div class="card">
+        <div class="card-head">
+          <span class="card-tag">Option E · Original</span>
+          <div class="card-title">Large centered (status quo)</div>
+          <div class="card-desc">For reference — the original layout. The wordmark dominates the top of the page and the rail smiley restates it 80px above.</div>
+        </div>
+        <div class="preview">
+          <div class="preview-inner">
+            <div class="p-rail">
+              <img class="p-rail-logo" src="uploads/Sourcely_Icon_Logo.png" alt="" />
+              <div class="p-rail-cities">nyc <span>·</span> orlando <span>·</span> barcelona <span>·</span> toronto <span>·</span> bogotá <span>·</span> zurich</div>
+              <div class="p-rail-cta">
+                <svg class="li-svg" viewBox="0 0 24 24" fill="#fff"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.49 6S0 4.88 0 3.5 1.11 1 2.49 1s2.49 1.12 2.49 2.5zM.22 8.98h4.55V24H.22zM8.07 8.98h4.36v2.05h.06c.61-1.15 2.09-2.36 4.3-2.36 4.6 0 5.45 3.03 5.45 6.96V24h-4.54v-7.42c0-1.77-.03-4.05-2.47-4.05-2.47 0-2.85 1.93-2.85 3.92V24H8.07z"/></svg>
+                Let's talk
+              </div>
+            </div>
+            <div class="p-masthead center">
+              <img src="uploads/Sourcely_Logo.jpg" alt="" />
+            </div>
+            <div class="p-hero">
+              <div>
+                <div class="p-hero-eyebrow"><span class="n">01</span> Trusted Talent Partners</div>
+                <h1 class="p-hero-title">Niche tech talent.</h1>
+              </div>
+              <div class="p-hero-aside">A US-based partner for niche tech roles.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="rec">
+      <span class="rec-eye">My recommendation</span>
+      <h3>Option A — hide the masthead.</h3>
+      <p>The smiley lockup in the floating rail does the brand-mark job on every screen, on every scroll position. The big wordmark below is essentially a second introduction within 80px of the first one — it pushes the hero down and competes with it. The rail logo + a confident "Niche tech talent. <em>Sourced with intention.</em>" hero is plenty. If you want the wordmark to appear somewhere prominent, Option C (anchored inside the hero column) is the next best — it earns its size by being part of the composition rather than sitting on top of it.</p>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Rail cities — lowercase variations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --navy:#003e54;
+    --navy-deep:#002636;
+    --teal:#44b8ab;
+    --teal-deep:#0fb9a4;
+    --line:rgba(0,62,84,0.10);
+    --muted:#5a7682;
+    --paper:#f6f1ea;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--navy-deep);
+    font-family:'Quicksand',system-ui,sans-serif;
+    padding:48px 32px 96px;
+  }
+  h1{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:2rem;
+    letter-spacing:-0.01em;
+    margin:0 0 8px;
+  }
+  .intro{
+    color:var(--muted);
+    max-width:640px;
+    margin:0 0 56px;
+    line-height:1.55;
+    font-size:0.95rem;
+  }
+  .variant{
+    margin:0 auto 48px;
+    max-width:1240px;
+  }
+  .variant-label{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    margin:0 0 14px;
+    padding-left:24px;
+  }
+  .variant-num{
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-weight:500;
+    color:var(--teal-deep);
+    font-size:0.9rem;
+  }
+  .variant-name{
+    font-weight:600;
+    font-size:0.78rem;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--navy);
+  }
+  .variant-desc{
+    color:var(--muted);
+    font-size:0.85rem;
+    margin-left:auto;
+    padding-right:24px;
+  }
+  /* Rail (mock of the floating nav) */
+  .rail{
+    width:100%;
+    padding:10px 14px 10px 22px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:24px;
+    background:rgba(255,255,255,0.96);
+    border:1px solid var(--line);
+    border-radius:999px;
+    box-shadow:0 16px 44px rgba(0,88,120,0.10),0 1px 0 rgba(255,255,255,0.6) inset;
+  }
+  .rail-logo{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:34px;height:34px;
+    border-radius:50%;
+    color:var(--navy);
+    flex-shrink:0;
+  }
+  .rail-logo svg{width:18px;height:18px}
+  .rail-cities{
+    flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--navy);
+  }
+  .rail-cta{
+    font-weight:700;
+    font-size:0.74rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:white;
+    padding:11px 20px;
+    border:none;
+    background:var(--navy);
+    border-radius:999px;
+    cursor:pointer;
+    flex-shrink:0;
+  }
+
+  /* ─── V1: teal blinking nodes (current style, lowercased) ─── */
+  .v1 .rail-city{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:6px 11px;
+    font-size:0.74rem;
+    font-weight:500;
+    letter-spacing:0.08em;
+  }
+  .v1 .node{
+    width:5px;height:5px;
+    border-radius:50%;
+    background:var(--teal);
+    box-shadow:0 0 0 2px rgba(68,184,171,0.18);
+  }
+  .v1 .rail-city:nth-child(odd) .node{animation:blink 4.4s ease-in-out infinite}
+  .v1 .rail-city:nth-child(even) .node{animation:blink 4.4s ease-in-out infinite;animation-delay:1.2s}
+  .v1 .rail-city:nth-child(3n) .node{animation-delay:2.2s}
+  @keyframes blink{
+    0%,100%{box-shadow:0 0 0 2px rgba(68,184,171,0.18);background:var(--teal)}
+    50%{box-shadow:0 0 0 5px rgba(68,184,171,0.02);background:var(--teal-deep)}
+  }
+
+  /* ─── V2: thin dot separators (·) ─── */
+  .v2 .rail-cities{gap:0;font-size:0.78rem;font-weight:500;letter-spacing:0.06em}
+  .v2 .city{padding:0 14px}
+  .v2 .sep{color:var(--teal);opacity:.7}
+
+  /* ─── V3: minimal, wide letter-spacing, no separator ─── */
+  .v3 .rail-cities{gap:0;font-size:0.74rem;font-weight:500;letter-spacing:0.22em;text-transform:lowercase}
+  .v3 .city{padding:0 18px;position:relative}
+  .v3 .city + .city::before{
+    content:'';
+    position:absolute;
+    left:0;top:50%;
+    width:3px;height:3px;
+    border-radius:50%;
+    background:var(--navy);
+    opacity:.25;
+    transform:translateY(-50%);
+  }
+
+  /* ─── V4: slash separator (vibey) ─── */
+  .v4 .rail-cities{gap:0;font-size:0.78rem;font-weight:600;letter-spacing:0.04em}
+  .v4 .city{padding:0 12px}
+  .v4 .sep{color:var(--teal-deep);font-weight:400;font-family:'Fraunces',serif;font-style:italic;font-size:0.9rem}
+
+  /* ─── V5: arrow flow (suggests global network) ─── */
+  .v5 .rail-cities{gap:0;font-size:0.76rem;font-weight:500;letter-spacing:0.08em}
+  .v5 .city{padding:0 10px}
+  .v5 .sep{color:var(--teal);font-weight:400;font-size:0.85rem;opacity:.65}
+
+  /* ─── V6: lens-icon separator (brand mark as glue) ─── */
+  .v6 .rail-cities{gap:0;font-size:0.76rem;font-weight:500;letter-spacing:0.06em}
+  .v6 .city{padding:0 12px}
+  .v6 .lens{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--teal-deep);
+    opacity:.7;
+  }
+  .v6 .lens svg{width:11px;height:11px}
+
+  /* ─── V7: Fraunces italic ampersand ─── */
+  .v7 .rail-cities{gap:0;font-size:0.76rem;font-weight:500;letter-spacing:0.06em}
+  .v7 .city{padding:0 11px}
+  .v7 .sep{
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:0.95rem;
+    color:var(--teal-deep);
+  }
+
+  /* ─── V8: Fraunces italic city names (most editorial) ─── */
+  .v8 .rail-cities{gap:0;font-size:0.95rem;font-family:'Fraunces',serif;font-style:italic;font-weight:500;letter-spacing:0.005em;color:var(--navy)}
+  .v8 .city{padding:0 11px}
+  .v8 .sep{
+    font-family:'Quicksand',sans-serif;
+    font-style:normal;
+    font-weight:500;
+    color:var(--teal);
+    font-size:0.7rem;
+    opacity:.7;
+    align-self:center;
+  }
+
+  /* ─── V9: hairline-underline accent on each city ─── */
+  .v9 .rail-cities{gap:18px;font-size:0.74rem;font-weight:500;letter-spacing:0.1em}
+  .v9 .city{
+    padding:4px 2px 6px;
+    border-bottom:1px solid var(--teal);
+  }
+
+</style>
+</head>
+<body>
+
+  <h1>Rail cities — lowercase</h1>
+  <p class="intro">Five takes on lowercasing the city list in the floating nav. Each preserves the same Sourcely chrome (icon, pill, CTA) so only the city treatment changes. Pick one and I'll wire it into the real nav.</p>
+
+  <!-- V1 — current style, lowercased -->
+  <section class="variant v1">
+    <div class="variant-label">
+      <span class="variant-num">v1</span>
+      <span class="variant-name">Teal nodes (current)</span>
+      <span class="variant-desc">Same pattern as today, just lowercase. Most familiar.</span>
+    </div>
+    <div class="rail">
+      <div class="rail-logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="6"/><line x1="14.5" y1="14.5" x2="20" y2="20"/></svg>
+      </div>
+      <div class="rail-cities">
+        <span class="rail-city"><span class="node"></span>nyc</span>
+        <span class="rail-city"><span class="node"></span>orlando</span>
+        <span class="rail-city"><span class="node"></span>barcelona</span>
+        <span class="rail-city"><span class="node"></span>toronto</span>
+        <span class="rail-city"><span class="node"></span>bogotá</span>
+        <span class="rail-city"><span class="node"></span>zurich</span>
+      </div>
+      <button class="rail-cta">Let's talk</button>
+    </div>
+  </section>
+
+  <!-- V2 — thin dots -->
+  <section class="variant v2">
+    <div class="variant-label">
+      <span class="variant-num">v2</span>
+      <span class="variant-name">Mid-dot separators</span>
+      <span class="variant-desc">Clean, classic — reads like a dateline.</span>
+    </div>
+    <div class="rail">
+      <div class="rail-logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="6"/><line x1="14.5" y1="14.5" x2="20" y2="20"/></svg>
+      </div>
+      <div class="rail-cities">
+        <span class="city">nyc</span><span class="sep">·</span>
+        <span class="city">orlando</span><span class="sep">·</span>
+        <span class="city">barcelona</span><span class="sep">·</span>
+        <span class="city">toronto</span><span class="sep">·</span>
+        <span class="city">bogotá</span><span class="sep">·</span>
+        <span class="city">zurich</span>
+      </div>
+      <button class="rail-cta">Let's talk</button>
+    </div>
+  </section>
+
+  <!-- V3 — wide letter-spacing, minimal -->
+  <section class="variant v3">
+    <div class="variant-label">
+      <span class="variant-num">v3</span>
+      <span class="variant-name">Wide-tracked minimalist</span>
+      <span class="variant-desc">Editorial, quiet, very lowercase. Lets the wordmark breathe.</span>
+    </div>
+    <div class="rail">
+      <div class="rail-logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="6"/><line x1="14.5" y1="14.5" x2="20" y2="20"/></svg>
+      </div>
+      <div class="rail-cities">
+        <span class="city">nyc</span>
+        <span class="city">orlando</span>
+        <span class="city">barcelona</span>
+        <span class="city">toronto</span>
+        <span class="city">bogotá</span>
+        <span class="city">zurich</span>
+      </div>
+      <button class="rail-cta">Let's talk</button>
+    </div>
+  </section>
+
+  <!-- V4 — slash separators -->
+  <section class="variant v4">
+    <div class="variant-label">
+      <span class="variant-num">v4</span>
+      <span class="variant-name">Italic slash separators</span>
+      <span class="variant-desc">Slightly editorial — slashes echo the serif italic in the brand.</span>
+    </div>
+    <div class="rail">
+      <div class="rail-logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="6"/><line x1="14.5" y1="14.5" x2="20" y2="20"/></svg>
+      </div>
+      <div class="rail-cities">
+        <span class="city">nyc</span><span class="sep">/</span>
+        <span class="city">orlando</span><span class="sep">/</span>
+        <span class="city">barcelona</span><span class="sep">/</span>
+        <span class="city">toronto</span><span class="sep">/</span>
+        <span class="city">bogotá</span><span class="sep">/</span>
+        <span class="city">zurich</span>
+      </div>
+      <button class="rail-cta">Let's talk</button>
+    </div>
+  </section>
+
+  <!-- V5 — arrow flow -->
+  <section class="variant v5">
+    <div class="variant-label">
+      <span class="variant-num">v5</span>
+      <span class="variant-name">Network flow (→)</span>
+      <span class="variant-desc">Implies a connected global network — most expressive option.</span>
+    </div>
+    <div class="rail">
+      <div class="rail-logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="6"/><line x1="14.5" y1="14.5" x2="20" y2="20"/></svg>
+      </div>
+      <div class="rail-cities">
+        <span class="city">nyc</span><span class="sep">→</span>
+        <span class="city">orlando</span><span class="sep">→</span>
+        <span class="city">barcelona</span><span class="sep">→</span>
+        <span class="city">toronto</span><span class="sep">→</span>
+        <span class="city">bogotá</span><span class="sep">→</span>
+        <span class="city">zurich</span>
+      </div>
+      <button class="rail-cta">Let's talk</button>
+    </div>
+  </section>
+
+  <!-- V6 — lens icon separators (brand mark) -->
+  <section class="variant v6">
+    <div class="variant-label">
+      <span class="variant-num">v6</span>
+      <span class="variant-name">Brand lens as separator</span>
+      <span class="variant-desc">Echoes the magnifying-glass mark you use as the “e” in display type. Most on-brand.</span>
+    </div>
+    <div class="rail">
+      <div class="rail-logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="6"/><line x1="14.5" y1="14.5" x2="20" y2="20"/></svg>
+      </div>
+      <div class="rail-cities">
+        <span class="city">nyc</span>
+        <span class="lens"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="10" cy="10" r="6"/><line x1="14.5" y1="14.5" x2="20" y2="20"/></svg></span>
+        <span class="city">orlando</span>
+        <span class="lens"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="10" cy="10" r="6"/><line x1="14.5" y1="14.5" x2="20" y2="20"/></svg></span>
+        <span class="city">barcelona</span>
+        <span class="lens"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="10" cy="10" r="6"/><line x1="14.5" y1="14.5" x2="20" y2="20"/></svg></span>
+        <span class="city">toronto</span>
+        <span class="lens"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="10" cy="10" r="6"/><line x1="14.5" y1="14.5" x2="20" y2="20"/></svg></span>
+        <span class="city">bogotá</span>
+        <span class="lens"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="10" cy="10" r="6"/><line x1="14.5" y1="14.5" x2="20" y2="20"/></svg></span>
+        <span class="city">zurich</span>
+      </div>
+      <button class="rail-cta">Let's talk</button>
+    </div>
+  </section>
+
+  <!-- V7 — Fraunces italic ampersand -->
+  <section class="variant v7">
+    <div class="variant-label">
+      <span class="variant-num">v7</span>
+      <span class="variant-name">Italic ampersand</span>
+      <span class="variant-desc">Quiet editorial nod — Fraunces italic &amp; in teal between cities.</span>
+    </div>
+    <div class="rail">
+      <div class="rail-logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="6"/><line x1="14.5" y1="14.5" x2="20" y2="20"/></svg>
+      </div>
+      <div class="rail-cities">
+        <span class="city">nyc</span><span class="sep">&amp;</span>
+        <span class="city">orlando</span><span class="sep">&amp;</span>
+        <span class="city">barcelona</span><span class="sep">&amp;</span>
+        <span class="city">toronto</span><span class="sep">&amp;</span>
+        <span class="city">bogotá</span><span class="sep">&amp;</span>
+        <span class="city">zurich</span>
+      </div>
+      <button class="rail-cta">Let's talk</button>
+    </div>
+  </section>
+
+  <!-- V8 — Fraunces italic city names -->
+  <section class="variant v8">
+    <div class="variant-label">
+      <span class="variant-num">v8</span>
+      <span class="variant-name">Italic serif cities</span>
+      <span class="variant-desc">Cities rendered in Fraunces italic — mirrors the emphasis words in your headlines.</span>
+    </div>
+    <div class="rail">
+      <div class="rail-logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="6"/><line x1="14.5" y1="14.5" x2="20" y2="20"/></svg>
+      </div>
+      <div class="rail-cities">
+        <span class="city">nyc</span><span class="sep">·</span>
+        <span class="city">orlando</span><span class="sep">·</span>
+        <span class="city">barcelona</span><span class="sep">·</span>
+        <span class="city">toronto</span><span class="sep">·</span>
+        <span class="city">bogotá</span><span class="sep">·</span>
+        <span class="city">zurich</span>
+      </div>
+      <button class="rail-cta">Let's talk</button>
+    </div>
+  </section>
+
+  <!-- V9 — hairline-underline on each city -->
+  <section class="variant v9">
+    <div class="variant-label">
+      <span class="variant-num">v9</span>
+      <span class="variant-name">Teal underline tag</span>
+      <span class="variant-desc">Each city tagged with a teal hairline underline — active, tactile, like a link.</span>
+    </div>
+    <div class="rail">
+      <div class="rail-logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="6"/><line x1="14.5" y1="14.5" x2="20" y2="20"/></svg>
+      </div>
+      <div class="rail-cities">
+        <span class="city">nyc</span>
+        <span class="city">orlando</span>
+        <span class="city">barcelona</span>
+        <span class="city">toronto</span>
+        <span class="city">bogotá</span>
+        <span class="city">zurich</span>
+      </div>
+      <button class="rail-cta">Let's talk</button>
+    </div>
+  </section>
+
+</body>
+</html>

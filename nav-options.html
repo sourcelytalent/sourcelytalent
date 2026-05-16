@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nav Logo Options</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{background:#FBF8F2;font-family:'Nunito',sans-serif;padding:60px 32px;color:#005878;}
+    h1{font-family:'Quicksand',sans-serif;font-weight:600;font-size:1.4rem;margin-bottom:8px;color:#005878;}
+    .lead{color:#6B8395;margin-bottom:40px;max-width:720px;}
+    .opt{margin-bottom:48px;}
+    .opt-label{font-family:'Quicksand',sans-serif;font-size:0.78rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#40C0B8;margin-bottom:6px;}
+    .opt-desc{font-size:0.92rem;color:#6B8395;margin-bottom:18px;max-width:640px;}
+    .nav-frame{background:#F4EEDF;border-radius:16px;padding:24px;}
+    nav{
+      background:linear-gradient(90deg,rgba(255,255,255,0.92) 0%,rgba(234,246,244,0.92) 50%,rgba(64,192,184,0.32) 100%);
+      backdrop-filter:blur(20px);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:10px 14px 10px 22px;
+      height:64px;
+      border-radius:999px;
+      border:1px solid rgba(0,88,120,0.08);
+      box-shadow:0 1px 2px rgba(0,88,120,0.04),0 8px 32px rgba(0,88,120,0.06);
+      max-width:720px;
+      margin:0 auto;
+      position:relative;
+    }
+    .nav-cta{
+      background:#005878;
+      width:44px;height:44px;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+    }
+    .nav-cta img{width:26px;height:26px;object-fit:contain;}
+
+    /* Option 1: wordmark image — needs white panel to be readable */
+    .o1 nav{
+      background:white;
+    }
+    .o1-logo img{height:36px;display:block;}
+
+    /* Option 2: icon + typeset wordmark */
+    .o2-logo{
+      display:flex;align-items:center;gap:10px;
+      position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    }
+    .o2-logo img{height:40px;display:block;}
+    .o2-logo .word{
+      font-family:'Quicksand',sans-serif;
+      font-weight:600;
+      font-size:1.15rem;
+      color:#005878;
+      letter-spacing:-0.005em;
+    }
+    .o2-logo .word .talent{color:#40C0B8;font-weight:500;}
+    .o2 .placeholder-left{width:1px;}
+
+    /* Option 3: bigger icon only */
+    .o3-logo{
+      position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+      display:flex;align-items:center;
+    }
+    .o3-logo img{height:56px;display:block;}
+    .o3 nav{height:80px;padding:14px 18px 14px 26px;}
+    .o3 .placeholder-left{width:1px;}
+    .o3 .nav-cta{width:52px;height:52px;}
+    .o3 .nav-cta img{width:30px;height:30px;}
+
+    /* Common centered logo for opt 1 */
+    .o1-logo{
+      position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    }
+    .o1 .placeholder-left{width:1px;}
+
+  </style>
+</head>
+<body>
+  <h1>Nav logo — three options</h1>
+  <p class="lead">Comparing how the logo can sit in the floating nav. Forefront uses a horizontal wordmark (option 2 below replicates that pattern in HTML/type for crispness at any size).</p>
+
+  <div class="opt o1">
+    <div class="opt-label">Option 1 · Wordmark image</div>
+    <p class="opt-desc">Uses your existing horizontal logo file (logo.jpg). Has a white background, so the nav becomes solid white instead of the teal ombré.</p>
+    <div class="nav-frame">
+      <nav>
+        <span class="placeholder-left"></span>
+        <a href="#" class="o1-logo">
+          <img src="uploads/logo.jpg" alt="Sourcely Talent" />
+        </a>
+        <a href="#" class="nav-cta"><img src="uploads/Sourcely_Icon_Logo_Inverted.png" alt="" /></a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="opt o2">
+    <div class="opt-label">Option 2 · Icon + typeset wordmark (Forefront style)</div>
+    <p class="opt-desc">Keeps the round icon, adds "Sourcely Talent" set in Quicksand alongside it. Crisp at any size, matches your logo's font, and works on the gradient background.</p>
+    <div class="nav-frame">
+      <nav>
+        <span class="placeholder-left"></span>
+        <a href="#" class="o2-logo">
+          <img src="uploads/Sourcely_Icon_LogoV2.png" alt="" />
+          <span class="word">Sourcely <span class="talent">Talent</span></span>
+        </a>
+        <a href="#" class="nav-cta"><img src="uploads/Sourcely_Icon_Logo_Inverted.png" alt="" /></a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="opt o3">
+    <div class="opt-label">Option 3 · Bigger icon only</div>
+    <p class="opt-desc">Just a larger round logo (56px instead of 40px). No distortion, more presence, but no wordmark.</p>
+    <div class="nav-frame">
+      <nav>
+        <span class="placeholder-left"></span>
+        <a href="#" class="o3-logo">
+          <img src="uploads/Sourcely_Icon_LogoV2.png" alt="Sourcely Talent" />
+        </a>
+        <a href="#" class="nav-cta"><img src="uploads/Sourcely_Icon_Logo_Inverted.png" alt="" /></a>
+      </nav>
+    </div>
+  </div>
+</body>
+</html>
