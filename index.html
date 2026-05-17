@@ -23,19 +23,19 @@
     })();
   </script>
   <title>Sourcely Talent — Niche tech recruiting for engineering, AI, product & GoToMarket leaders</title>
-  <meta name="description" content="Sourcely Talent partners with hiring managers, CTOs, CPOs and senior tech leaders to source niche engineering, machine learning, AI, product, research and GoToMarket talent. First qualified profiles in seven days. Veteran-owned, globally networked across San Francisco, NYC, Orlando, Barcelona, Toronto, Bogotá and Zurich." />
+  <meta name="description" content="Boutique talent sourcing for data science, ML/AI, Engineering & GTM." />
   <meta name="keywords" content="tech recruiting, niche tech talent, AI recruiting, machine learning recruiting, executive search, engineering recruiting, product recruiting, GoToMarket recruiting, GTM recruiting, talent partner, veteran-owned recruiting" />
   <meta name="author" content="Sourcely Talent" />
   <link rel="canonical" href="https://sourcelytalent.com/" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Sourcely Talent — Niche tech recruiting partners" />
-  <meta property="og:description" content="First qualified profiles in seven days. Engineering, AI, product, research and GoToMarket talent for Seed-to-Enterprise tech teams. Veteran-owned." />
+  <meta property="og:description" content="Boutique talent sourcing for data science, ML/AI, Engineering & GTM." />
   <meta property="og:url" content="https://sourcelytalent.com/" />
   <meta property="og:image" content="assets/sourcely-wordmark.png" />
   <meta property="og:site_name" content="Sourcely Talent" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Sourcely Talent — Niche tech recruiting partners" />
-  <meta name="twitter:description" content="First qualified profiles in seven days. Niche tech, AI and GoToMarket talent for hiring managers and senior tech leaders." />
+  <meta name="twitter:description" content="Boutique talent sourcing for data science, ML/AI, Engineering & GTM." />
   <meta name="twitter:image" content="assets/sourcely-wordmark.png" />
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png" />
@@ -150,10 +150,11 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --teal: #3ECFBE;
-      --teal-deep: #29B5A4;
-      --teal-tint: #E6F7F4;
-      --teal-soft: #F3FBF8;
+      /* Logo teal — sampled directly from sourcely-mark-teal.png (#40C0B8). */
+      --teal: #40C0B8;
+      --teal-deep: #2FA39A;
+      --teal-tint: #E5F6F4;
+      --teal-soft: #F3FAF9;
       --navy: #005878;
       --navy-deep: #005878;
       --navy-light: #0E7BA0;
@@ -441,8 +442,8 @@
     }
     .rail-city .node { display: none; }
     @keyframes blink {
-      0%, 100% { box-shadow: 0 0 0 2px rgba(68,184,171,0.18); background: var(--teal); }
-      50%      { box-shadow: 0 0 0 5px rgba(68,184,171,0.0); background: var(--teal-deep); }
+      0%, 100% { box-shadow: 0 0 0 2px rgba(64,192,184,0.18); background: var(--teal); }
+      50%      { box-shadow: 0 0 0 5px rgba(64,192,184,0.0); background: var(--teal-deep); }
     }
     .rail-status {
       width: 8px; height: 8px;
@@ -803,7 +804,7 @@
 
     /* ───── Band: Promise / Differentiator ───── */
     .band {
-      background: linear-gradient(180deg, rgba(15, 185, 164, 0.025) 0%, rgba(15, 185, 164, 0.07) 100%);
+      background: linear-gradient(180deg, rgba(64, 192, 184, 0.025) 0%, rgba(64, 192, 184, 0.07) 100%);
       border-top: 1px solid var(--line);
       border-bottom: 1px solid var(--line);
       padding: 96px 0;
@@ -1203,7 +1204,7 @@
 
     /* ───── Engagement models ───── */
     .models-wrap {
-      background: linear-gradient(180deg, rgba(15, 185, 164, 0.03) 0%, rgba(15, 185, 164, 0.075) 100%);
+      background: linear-gradient(180deg, rgba(64, 192, 184, 0.03) 0%, rgba(64, 192, 184, 0.075) 100%);
       border-top: 1px solid var(--line);
       border-bottom: 1px solid var(--line);
     }
@@ -1370,7 +1371,7 @@
 
     /* ───── CTA ───── */
     .cta-band {
-      background: linear-gradient(180deg, rgba(15, 185, 164, 0.05) 0%, rgba(15, 185, 164, 0.085) 100%);
+      background: linear-gradient(180deg, rgba(64, 192, 184, 0.05) 0%, rgba(64, 192, 184, 0.085) 100%);
       padding: 120px 0;
       position: relative;
       overflow: hidden;
@@ -1977,7 +1978,7 @@
       transition: color 0.18s ease, background 0.18s ease;
       white-space: nowrap;
     }
-    .rail-tab:hover { color: var(--teal-deep); background: rgba(15,185,164,0.08); }
+    .rail-tab:hover { color: var(--teal-deep); background: rgba(64,192,184,0.08); }
     .rail-tab.is-active {
       color: white;
       background: var(--navy);
@@ -1996,48 +1997,24 @@
     @media (max-width: 940px) {
       .rail-tabs {
         padding: 0;
-        overflow-x: auto;
-        overflow-y: hidden;
-        scrollbar-width: none;
-        -webkit-overflow-scrolling: touch;
-        overscroll-behavior-x: contain;
+        overflow: hidden;
         -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 10%, #000 90%, transparent 100%);
                 mask-image: linear-gradient(90deg, transparent 0, #000 10%, #000 90%, transparent 100%);
       }
-      .rail-tabs::-webkit-scrollbar { display: none; }
       .rail-tabs-track {
         width: max-content;
-        animation: rail-tabs-marquee 16s linear infinite;
         will-change: transform;
+        /* JS drives the rotation via translateX. */
       }
-      .rail-tabs:hover .rail-tabs-track {
-        animation-play-state: paused;
-      }
-      /* Note: we intentionally do NOT pause on :focus-within or :active on
-         mobile — tapping a tab leaves it focused, which would freeze the
-         marquee in place and hide tabs (e.g. Focus) past the visible window.
-         The marquee should keep cycling after a tap. */
-      /* Once the user has touched the rail, kill the marquee animation so the
-         native horizontal scroll takes over cleanly — no fighting between
-         transform-based animation and scrollLeft. */
-      .rail-tabs.is-user-scrolled .rail-tabs-track {
-        animation: none;
-        transform: none;
-      }
-      .rail-tab-clone { display: inline-flex; }
       .rail-tab {
         padding: 7px 11px;
         font-size: 0.62rem;
         letter-spacing: 0.10em;
-        scroll-snap-align: center;
         touch-action: manipulation;
-      }
-      @keyframes rail-tabs-marquee {
-        from { transform: translateX(0); }
-        to   { transform: translateX(-50%); }
+        flex-shrink: 0;
       }
       @media (prefers-reduced-motion: reduce) {
-        .rail-tabs-track { animation: none; }
+        .rail-tabs-track { transform: none !important; }
       }
     }
 
@@ -2113,7 +2090,22 @@
       .tab-nav-next { right: 10px; }
     }
     @media (max-width: 600px) {
-      .tab-nav-arrow { display: none; }
+      /* Keep arrows visible on phones — pin them to the vertical center of the
+         viewport so they never scroll out of reach while the user reads. */
+      .tab-nav-arrow {
+        position: fixed;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 42px;
+        height: 42px;
+        background: rgba(255,255,255,0.96);
+        box-shadow: 0 10px 26px rgba(0,88,120,0.22);
+        z-index: 90;
+      }
+      .tab-nav-prev { left: 8px; }
+      .tab-nav-next { right: 8px; }
+      .tab-nav-arrow:hover { transform: translateY(-50%) scale(1.06); }
+      .tab-nav-arrow svg { width: 16px; height: 16px; }
     }
 
     /* Slim contextual eyebrow that appears above the hero giving page reach */
@@ -2343,11 +2335,6 @@
           <button type="button" class="rail-tab" role="tab" data-tab-link="process" aria-controls="tab-process"><span class="tab-num">02</span>Process</button>
           <button type="button" class="rail-tab" role="tab" data-tab-link="models" aria-controls="tab-models"><span class="tab-num">03</span>Engagements</button>
           <button type="button" class="rail-tab" role="tab" data-tab-link="focus" aria-controls="tab-focus"><span class="tab-num">04</span>Focus</button>
-          <!-- Clones for mobile marquee — hidden on desktop, animated into view on small screens -->
-          <button type="button" class="rail-tab rail-tab-clone" aria-hidden="true" tabindex="-1" data-tab-link="proof"><span class="tab-num">01</span>Proof</button>
-          <button type="button" class="rail-tab rail-tab-clone" aria-hidden="true" tabindex="-1" data-tab-link="process"><span class="tab-num">02</span>Process</button>
-          <button type="button" class="rail-tab rail-tab-clone" aria-hidden="true" tabindex="-1" data-tab-link="models"><span class="tab-num">03</span>Engagements</button>
-          <button type="button" class="rail-tab rail-tab-clone" aria-hidden="true" tabindex="-1" data-tab-link="focus"><span class="tab-num">04</span>Focus</button>
         </div>
       </nav>
       <button class="rail-cta" data-contact-trigger>Let's talk</button>
@@ -2810,7 +2797,7 @@
         <div class="c1-col-eye">Connect</div>
         <a href="https://www.linkedin.com/in/richie-perez/" target="_blank" rel="noopener"><span>Richie Perez<br/><span class="handle">linkedin.com/in/richie-perez</span></span><span class="arrow">→</span></a>
         <a href="https://www.linkedin.com/company/sourcely-talent" target="_blank" rel="noopener"><span>Sourcely Talent<br/><span class="handle">linkedin.com/company/sourcelytalent</span></span><span class="arrow">→</span></a>
-        <a href="mailto:info@sourcelytalent.com"><span>Email<br/><span class="handle">info@sourcelytalent.com</span></span><span class="arrow">→</span></a>
+        <a href="/cdn-cgi/l/email-protection#c1a8afa7ae81b2aeb4b3a2a4adb8b5a0ada4afb5efa2aeac"><span>Email<br/><span class="handle"><span class="__cf_email__" data-cfemail="2940474f46695a465c5b4a4c45505d48454c475d074a4644">[email&#160;protected]</span></span></span><span class="arrow">→</span></a>
       </div>
     </div>
 
@@ -2900,7 +2887,7 @@
     </div>
   </div>
 
-  <script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     // ── Modal ──
     const modal = document.getElementById('contactModal');
     const closeBtn = document.getElementById('closeModal');
@@ -3088,9 +3075,9 @@
       return document.querySelector(`.tab-panel[data-tab="${name}"]`);
     }
     function updateArrows(name) {
-      const idx = VALID_TABS.indexOf(name);
-      if (prevArrow) prevArrow.disabled = idx <= 0;
-      if (nextArrow) nextArrow.disabled = idx >= VALID_TABS.length - 1;
+      // Arrows cycle through all 4 panels — never disable them.
+      if (prevArrow) prevArrow.disabled = false;
+      if (nextArrow) nextArrow.disabled = false;
     }
     function updateButtons(name, opts = {}) {
       const showHighlight = opts.highlight !== false;
@@ -3195,66 +3182,77 @@
       });
     });
 
-    // ── Mobile rail: once the user touches it, kill the marquee animation
-    //    so the rail switches to native horizontal-scroll mode. Taps still
-    //    fire normally because we only intercept multi-pixel drags. ──
+    // ── Mobile rail: continuously rotate the 4 tabs through the viewport.
+    //    Only the 4 originals live in the DOM — when the leftmost tab scrolls
+    //    fully off the left edge we move it to the end of the track and
+    //    subtract its width from the offset, so the cycle is seamless.
+    //    Touching a tab pauses the rotation; it resumes 3 seconds after the
+    //    last touch. Desktop layouts ignore this entirely.
     const railTabs = document.querySelector('.rail-tabs');
-    if (railTabs) {
-      let railTouchStartX = null;
-      let railTouchStartY = null;
-      let railTouchMoved = false;
-      const markRailScrolled = () => {
-        if (railTabs.classList.contains('is-user-scrolled')) return;
-        // Freeze the rail track at its current animated position before we kill
-        // the animation, so it doesn't snap back to translateX(0).
-        const track = railTabs.querySelector('.rail-tabs-track');
-        if (track) {
-          const m = getComputedStyle(track).transform;
-          // Read the matrix's tx and convert it to scrollLeft once we've cleared
-          // the transform, so the visible position is preserved.
-          let tx = 0;
-          if (m && m !== 'none') {
-            const parts = m.match(/matrix.*\((.+)\)/);
-            if (parts) {
-              const vals = parts[1].split(',').map(parseFloat);
-              tx = vals.length === 6 ? vals[4] : (vals.length === 16 ? vals[12] : 0);
-            }
-          }
-          railTabs.classList.add('is-user-scrolled');
-          // After animation is cleared, translate the visible offset into scrollLeft.
-          railTabs.scrollLeft = Math.max(0, -tx);
-        } else {
-          railTabs.classList.add('is-user-scrolled');
+    const railTrack = railTabs && railTabs.querySelector('.rail-tabs-track');
+    if (railTabs && railTrack) {
+      const isMobile = () => window.matchMedia('(max-width: 940px)').matches;
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const SPEED_PX_PER_SEC = 26;   // gentle drift
+      const RESUME_AFTER_MS  = 3000; // resume 3s after last touch
+      let offset = 0;
+      let lastTs = 0;
+      let paused = false;
+      let resumeTimer = null;
+      let rafId = null;
+
+      const trackGap = () => {
+        const g = parseFloat(getComputedStyle(railTrack).columnGap || getComputedStyle(railTrack).gap || '0');
+        return isNaN(g) ? 0 : g;
+      };
+
+      function recycleIfNeeded() {
+        const first = railTrack.firstElementChild;
+        if (!first) return;
+        const w = first.getBoundingClientRect().width + trackGap();
+        if (offset >= w) {
+          offset -= w;
+          railTrack.appendChild(first);
+        }
+      }
+
+      function tickRail(ts) {
+        if (!lastTs) lastTs = ts;
+        const dt = Math.min(0.1, (ts - lastTs) / 1000); // cap dt to avoid jumps after tab-away
+        lastTs = ts;
+        if (!paused && isMobile() && !prefersReduced.matches) {
+          offset += SPEED_PX_PER_SEC * dt;
+          recycleIfNeeded();
+          railTrack.style.transform = `translateX(${-offset}px)`;
+        }
+        rafId = requestAnimationFrame(tickRail);
+      }
+
+      function pauseAndScheduleResume() {
+        paused = true;
+        if (resumeTimer) clearTimeout(resumeTimer);
+        resumeTimer = setTimeout(() => {
+          paused = false;
+          lastTs = 0; // reset so dt doesn't spike
+        }, RESUME_AFTER_MS);
+      }
+
+      // Any touch interaction on the rail pauses rotation for 3s.
+      ['touchstart', 'touchmove', 'pointerdown'].forEach(ev => {
+        railTabs.addEventListener(ev, pauseAndScheduleResume, { passive: true });
+      });
+
+      // Reset transform when leaving mobile so desktop layout is clean.
+      const onResize = () => {
+        if (!isMobile()) {
+          railTrack.style.transform = '';
+          offset = 0;
         }
       };
-      railTabs.addEventListener('touchstart', (e) => {
-        const t = e.touches[0];
-        railTouchStartX = t.clientX;
-        railTouchStartY = t.clientY;
-        railTouchMoved = false;
-      }, { passive: true });
-      railTabs.addEventListener('touchmove', (e) => {
-        if (railTouchStartX == null) return;
-        const t = e.touches[0];
-        const dx = Math.abs(t.clientX - railTouchStartX);
-        const dy = Math.abs(t.clientY - railTouchStartY);
-        if (dx > 6 && dx > dy) {
-          railTouchMoved = true;
-          markRailScrolled();
-        }
-      }, { passive: true });
-      // Also flip on mousedown for hybrid devices.
-      railTabs.addEventListener('pointerdown', () => { /* tap allowed, full lock on move */ }, { passive: true });
-      railTabs.addEventListener('wheel', markRailScrolled, { passive: true });
-      railTabs.addEventListener('scroll', () => {
-        // Native scroll attempt — lock in.
-        if (railTabs.scrollLeft > 0) markRailScrolled();
-      }, { passive: true });
-      // If a tap moved more than 8px, swallow the click so we don't activate a
-      // tab the user was trying to swipe past.
-      railTabs.addEventListener('click', (e) => {
-        if (railTouchMoved) { e.preventDefault(); e.stopPropagation(); railTouchMoved = false; }
-      }, true);
+      window.addEventListener('resize', onResize);
+      onResize();
+
+      rafId = requestAnimationFrame(tickRail);
     }
 
     // ── Swipe between tab panels on touch devices. Horizontal swipes inside
@@ -3305,8 +3303,9 @@
 
     function step(delta) {
       const idx = VALID_TABS.indexOf(currentTab);
-      const nextIdx = idx + delta;
-      if (nextIdx < 0 || nextIdx >= VALID_TABS.length) return;
+      const len = VALID_TABS.length;
+      // Wrap so the user can swipe / arrow through all 4 areas cyclically.
+      const nextIdx = ((idx + delta) % len + len) % len;
       activateTab(VALID_TABS[nextIdx]);
     }
     prevArrow?.addEventListener('click', () => step(-1));
