@@ -18,8 +18,11 @@
   <meta name="twitter:title" content="Sourcely Talent — Niche tech recruiting partners" />
   <meta name="twitter:description" content="First qualified profiles in seven days. Niche tech, AI and GoToMarket talent for hiring managers and senior tech leaders." />
   <meta name="twitter:image" content="assets/sourcely-wordmark.png" />
-  <link rel="icon" type="image/png" href="assets/sourcely-mark.png" />
-  <link rel="apple-touch-icon" href="assets/sourcely-mark.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="assets/favicon-512.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="assets/favicon-192.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="assets/favicon-512.png" />
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <meta name="theme-color" content="#005878" />
   <meta name="format-detection" content="telephone=no" />
@@ -1926,11 +1929,17 @@
     .rail-tabs {
       display: flex;
       align-items: center;
-      gap: 4px;
       flex: 1;
       justify-content: center;
       padding: 0 12px;
+      min-width: 0;
     }
+    .rail-tabs-track {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .rail-tab-clone { display: none; }
     .rail-tab {
       font-family: 'Asap', sans-serif;
       font-weight: 700;
@@ -1963,10 +1972,34 @@
       .rail-tab { padding: 9px 12px; font-size: 0.68rem; letter-spacing: 0.14em; }
       .rail-tab .tab-num { display: none; }
     }
-    @media (max-width: 880px) {
-      .rail-tabs { gap: 0; padding: 0 4px; overflow-x: auto; scrollbar-width: none; }
-      .rail-tabs::-webkit-scrollbar { display: none; }
-      .rail-tab { padding: 7px 10px; font-size: 0.62rem; }
+    @media (max-width: 940px) {
+      .rail-tabs {
+        padding: 0;
+        overflow: hidden;
+        -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 10%, #000 90%, transparent 100%);
+                mask-image: linear-gradient(90deg, transparent 0, #000 10%, #000 90%, transparent 100%);
+      }
+      .rail-tabs-track {
+        width: max-content;
+        animation: rail-tabs-marquee 16s linear infinite;
+        will-change: transform;
+      }
+      .rail-tabs:hover .rail-tabs-track,
+      .rail-tabs:focus-within .rail-tabs-track,
+      .rail-tabs:active .rail-tabs-track {
+        animation-play-state: paused;
+      }
+      .rail-tab-clone { display: inline-flex; }
+      .rail-tab { padding: 7px 11px; font-size: 0.62rem; letter-spacing: 0.10em; }
+      @keyframes rail-tabs-marquee {
+        from { transform: translateX(0); }
+        to   { transform: translateX(-50%); }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .rail-tabs-track { animation: none; }
+        .rail-tabs { overflow-x: auto; scrollbar-width: none; }
+        .rail-tabs::-webkit-scrollbar { display: none; }
+      }
     }
 
     /* ───── Tab panels ───── */
@@ -2266,10 +2299,17 @@
         <img src="assets/sourcely-mark.png" alt="Sourcely Talent" />
       </a>
       <nav class="rail-tabs" role="tablist">
-        <button type="button" class="rail-tab" role="tab" data-tab-link="proof" aria-controls="tab-proof"><span class="tab-num">01</span>Proof</button>
-        <button type="button" class="rail-tab" role="tab" data-tab-link="process" aria-controls="tab-process"><span class="tab-num">02</span>Process</button>
-        <button type="button" class="rail-tab" role="tab" data-tab-link="models" aria-controls="tab-models"><span class="tab-num">03</span>Engagements</button>
-        <button type="button" class="rail-tab" role="tab" data-tab-link="focus" aria-controls="tab-focus"><span class="tab-num">04</span>Focus</button>
+        <div class="rail-tabs-track">
+          <button type="button" class="rail-tab" role="tab" data-tab-link="proof" aria-controls="tab-proof"><span class="tab-num">01</span>Proof</button>
+          <button type="button" class="rail-tab" role="tab" data-tab-link="process" aria-controls="tab-process"><span class="tab-num">02</span>Process</button>
+          <button type="button" class="rail-tab" role="tab" data-tab-link="models" aria-controls="tab-models"><span class="tab-num">03</span>Engagements</button>
+          <button type="button" class="rail-tab" role="tab" data-tab-link="focus" aria-controls="tab-focus"><span class="tab-num">04</span>Focus</button>
+          <!-- Clones for mobile marquee — hidden on desktop, animated into view on small screens -->
+          <button type="button" class="rail-tab rail-tab-clone" aria-hidden="true" tabindex="-1" data-tab-link="proof"><span class="tab-num">01</span>Proof</button>
+          <button type="button" class="rail-tab rail-tab-clone" aria-hidden="true" tabindex="-1" data-tab-link="process"><span class="tab-num">02</span>Process</button>
+          <button type="button" class="rail-tab rail-tab-clone" aria-hidden="true" tabindex="-1" data-tab-link="models"><span class="tab-num">03</span>Engagements</button>
+          <button type="button" class="rail-tab rail-tab-clone" aria-hidden="true" tabindex="-1" data-tab-link="focus"><span class="tab-num">04</span>Focus</button>
+        </div>
       </nav>
       <button class="rail-cta" data-contact-trigger>Let's talk</button>
     </header>
@@ -2731,7 +2771,7 @@
         <div class="c1-col-eye">Connect</div>
         <a href="https://www.linkedin.com/in/richie-perez/" target="_blank" rel="noopener"><span>Richie Perez<br/><span class="handle">linkedin.com/in/richie-perez</span></span><span class="arrow">→</span></a>
         <a href="https://www.linkedin.com/company/sourcely-talent" target="_blank" rel="noopener"><span>Sourcely Talent<br/><span class="handle">linkedin.com/company/sourcelytalent</span></span><span class="arrow">→</span></a>
-        <a href="/cdn-cgi/l/email-protection#1a73747c755a69756f68797f76636e7b767f746e34797577"><span>Email<br/><span class="handle"><span class="__cf_email__" data-cfemail="40292e262f00332f353223252c3934212c252e346e232f2d">[email&#160;protected]</span></span></span><span class="arrow">→</span></a>
+        <a href="/cdn-cgi/l/email-protection#4920272f26093a263c3b2a2c25303d28252c273d672a2624"><span>Email<br/><span class="handle"><span class="__cf_email__" data-cfemail="21484f474e61524e545342444d5855404d444f550f424e4c">[email&#160;protected]</span></span></span><span class="arrow">→</span></a>
       </div>
     </div>
 
