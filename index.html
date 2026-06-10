@@ -1478,19 +1478,20 @@
     .foot-band {
       background: white;
       width: 100%;
-      padding: 28px 0;
+      padding: 32px 0;
     }
     .foot-band-inner {
       max-width: 1280px;
       margin: 0 auto;
-      padding: 0 40px;
       display: flex;
+      justify-content: center;
       align-items: center;
-      justify-content: space-between;
-      gap: 40px;
+      padding: 0 40px;
       flex-wrap: wrap;
+      gap: 20px;
     }
-    .foot-band-inner .foot-logo img { height: 44px; width: auto; display: block; }
+    .foot-band-inner .foot-logo { text-align: center; width: 100%; }
+    .foot-band-inner .foot-logo img { height: 72px; width: auto; display: block; margin: 0 auto; }
     .foot-band-inner .foot-locations {
       font-family: 'Asap', sans-serif;
       font-size: 0.78rem;
@@ -2259,7 +2260,7 @@
     }
     .about-founder-intro {
       display: grid; grid-template-columns: minmax(0,7fr) minmax(0,5fr);
-      gap: 64px; align-items: start; margin-bottom: 48px;
+      gap: 64px; align-items: start; margin-bottom: 14px;
     }
     .about-founder-lead { font-size: 1.04rem; line-height: 1.74; color: var(--ink); }
     .about-founder-photo-col { display: flex; flex-direction: column; align-items: flex-end; }
@@ -2283,7 +2284,7 @@
       margin-bottom: 18px; text-wrap: pretty;
     }
     .about-founder-pull {
-      margin: 28px 0; padding: 18px 24px;
+      margin: 0 0 20px; padding: 18px 24px;
       border-left: 3px solid var(--teal);
       background: rgba(62,207,190,0.05); border-radius: 0 4px 4px 0;
     }
@@ -2365,9 +2366,68 @@
       .foot-band-inner .foot-locations { justify-content: center; flex-wrap: wrap; }
     }
 
+    /* ── Page preloader ── */
+    #preloader {
+      position: fixed;
+      inset: 0;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.55s cubic-bezier(.4,0,.2,1);
+    }
+    #preloader.is-exiting {
+      opacity: 0;
+      pointer-events: none;
+    }
+    #preloader.hidden {
+      display: none;
+    }
+    #preloader-logo {
+      width: 110px;
+      height: auto;
+      animation: logo-heartbeat 1.9s cubic-bezier(.4,0,.2,1) 0.15s both;
+      transform-origin: center center;
+      filter: drop-shadow(0 8px 24px rgba(0,88,120,0.13));
+    }
+    #preloader-logo.is-exiting {
+      animation: logo-exit 0.55s cubic-bezier(.4,0,.2,1) forwards;
+    }
+    /* Two-beat organic pulse — not a flat bounce, more like alive */
+    @keyframes logo-heartbeat {
+      0%   { opacity: 0; transform: scale(0.82); }
+      18%  { opacity: 1; transform: scale(1.0); }
+      32%  { transform: scale(1.07); }
+      44%  { transform: scale(0.97); }
+      58%  { transform: scale(1.04); }
+      70%  { transform: scale(1.0); }
+      100% { opacity: 1; transform: scale(1.0); }
+    }
+    /* Exit: drift gently down toward nav, shrink, fade */
+    @keyframes logo-exit {
+      0%   { opacity: 1; transform: scale(1.0) translateY(0); }
+      100% { opacity: 0; transform: scale(0.28) translateY(36px); }
+    }
+
+    /* Nav logo starts invisible, fades in on preloader exit */
+    .rail-logo img {
+      opacity: 0;
+      transition: opacity 0.5s ease 0.1s;
+    }
+    .rail-logo img.is-visible {
+      opacity: 1;
+    }
+
   </style>
 </head>
 <body>
+
+  <!-- PAGE PRELOADER -->
+  <div id="preloader">
+    <img src="uploads/Logo_Icon-83d69e9c.png" id="preloader-logo" alt="Sourcely Talent" />
+  </div>
+
 
   <template id="__bundler_thumbnail">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
@@ -2408,25 +2468,6 @@
     </header>
   </div>
 
-  <!-- CITIES BANNER -->
-  <aside class="cities-banner" aria-label="Sourcely Talent — global network">
-    <div class="cities-banner-inner">
-      <div class="cities-banner-label">
-        <span class="cities-banner-pulse" aria-hidden="true"></span>
-        Sourcing Where It Matters
-      </div>
-      <div class="cities-banner-list" role="list">
-        <span class="cities-banner-city" role="listitem">San Francisco</span>
-        <span class="cities-banner-city" role="listitem">New York City</span>
-        <span class="cities-banner-city" role="listitem">Orlando</span>
-        <span class="cities-banner-city" role="listitem">Barcelona</span>
-        <span class="cities-banner-city" role="listitem">Toronto</span>
-        <span class="cities-banner-city" role="listitem">Bogotá</span>
-        <span class="cities-banner-city" role="listitem">Zurich</span>
-      </div>
-      <p class="cities-banner-tagline">Active hiring manager partnerships across the U.S., Latin America, and Europe — so when the right person isn't local, we already know where to look.</p>
-    </div>
-  </aside>
 
   <!-- HERO -->
   <section class="hero">
@@ -2451,7 +2492,7 @@
 
     <aside class="hero-aside">
       <div class="aside-sticker" aria-hidden="true">
-        <img src="uploads/Sourcely_Icon_Logo_cropped.png" alt="" />
+        <img src="uploads/Logo_Icon-83d69e9c.png" alt="" />
       </div>
       <div class="quote-card">
         <div class="quote-mark">"</div>
@@ -2798,6 +2839,9 @@
         <h2 class="about-founder-headline"><span class="about-hl-punch">Ten years in.</span> <span class="about-hl-sub">Still the most interesting problem I've ever worked on.</span></h2>
         <hr class="about-founder-rule" />
         <p class="about-founder-lead">I'm Richie Peréz — founder and principal talent strategist at Sourcely Talent. Over a decade ago I started working in niche technical recruiting, and somewhere along the way it stopped being a job and became something I genuinely love. The strategy. The search. The moment a hiring manager meets someone and immediately understands why I sent them.</p>
+        <div class="about-founder-pull" style="margin-top:24px;margin-bottom:0;">
+          <p>"Sourcing has become an art form to me — and I'm still learning it."</p>
+        </div>
       </div>
       <div class="about-founder-photo-col">
         <img src="uploads/ProfilePic.jpg" class="about-founder-photo" alt="Richie Peréz, Founder of Sourcely Talent" />
@@ -2808,9 +2852,6 @@
       </div>
     </div>
     <div class="about-founder-body">
-      <div class="about-founder-pull">
-        <p>"Sourcing has become an art form to me — and I'm still learning it."</p>
-      </div>
       <p>I've built a practice around Data Science, Machine Learning, AI Engineering, and the infrastructure roles that hold those teams together. Not because it was the obvious play, but because I went deep, stayed curious, and found that the harder the search, the more I wanted to solve it. That's still true today.</p>
       <p>I'm a U.S. Army veteran. That shapes everything about how I operate: the discipline, the follow-through, the honest conversation when the market isn't telling you what you want to hear. I won't send you a resume I can't stand behind. I won't hand you off to a coordinator once the kickoff call ends. Every search is mine from day one to day done.</p>
       <p>Sourcely Talent is intentionally small. No bench. No volume plays. Just a focused, evolving approach to finding people who are genuinely hard to find and making sure the fit holds long after the offer is signed.</p>
@@ -2834,7 +2875,7 @@
       <div>
         <div class="cta-headline">
           <div class="cta-mark" aria-hidden="true">
-            <img src="uploads/Sourcely_Icon_Logo_cropped.png" alt="Sourcely Talent" />
+            <img src="uploads/Logo_Icon-83d69e9c.png" alt="Sourcely Talent" />
           </div>
           <h2>
             Let's start a <em>conversation</em>,<br/>not a contract.
@@ -2871,13 +2912,30 @@
     <div class="foot-band">
       <div class="foot-band-inner">
         <div class="foot-logo">
-          <img src="assets/sourcely-logo-main.png" alt="Sourcely Talent" />
+          <img src="uploads/Sourcely_Logo-f512125b.png" alt="Sourcely Talent" />
         </div>
-        <div class="foot-locations">
-          SAN FRANCISCO <span>·</span> NEW YORK CITY <span>·</span> ORLANDO <span>·</span> BARCELONA <span>·</span> TORONTO <span>·</span> BOGOTÁ <span>·</span> ZURICH
-        </div>
+
       </div>
     </div>
+  <!-- CITIES BANNER -->
+  <aside class="cities-banner" aria-label="Sourcely Talent — global network">
+    <div class="cities-banner-inner">
+      <div class="cities-banner-label">
+        <span class="cities-banner-pulse" aria-hidden="true"></span>
+        Sourcing Where It Matters
+      </div>
+      <div class="cities-banner-list" role="list">
+        <span class="cities-banner-city" role="listitem">San Francisco</span>
+        <span class="cities-banner-city" role="listitem">New York City</span>
+        <span class="cities-banner-city" role="listitem">Orlando</span>
+        <span class="cities-banner-city" role="listitem">Barcelona</span>
+        <span class="cities-banner-city" role="listitem">Toronto</span>
+        <span class="cities-banner-city" role="listitem">Bogotá</span>
+        <span class="cities-banner-city" role="listitem">Zurich</span>
+      </div>
+      <p class="cities-banner-tagline">Active hiring manager partnerships across the U.S., Latin America, and Europe — so when the right person isn't local, we already know where to look.</p>
+    </div>
+  </aside>
     <div class="c1-grid">
       <div class="c1-col">
         <div class="c1-col-eye">Site</div>
@@ -2891,7 +2949,7 @@
         <div class="c1-col-eye">Connect</div>
         <a href="https://www.linkedin.com/in/richie-perez/" target="_blank" rel="noopener"><span>Richie Peréz<br/><span class="handle">linkedin.com/in/richie-perez</span></span><span class="arrow">→</span></a>
         <a href="https://www.linkedin.com/company/sourcely-talent" target="_blank" rel="noopener"><span>Sourcely Talent<br/><span class="handle">linkedin.com/company/sourcelytalent</span></span><span class="arrow">→</span></a>
-        <a href="/cdn-cgi/l/email-protection#94fdfaf2fbd4e7fbe1e6f7f1f8ede0f5f8f1fae0baf7fbf9"><span>Email<br/><span class="handle"><span class="__cf_email__" data-cfemail="0b62656d644b78647e79686e67727f6a676e657f25686466">[email&#160;protected]</span></span></span><span class="arrow">→</span></a>
+        <a href="/cdn-cgi/l/email-protection#3c55525a537c4f53494e5f595045485d50595248125f5351"><span>Email<br/><span class="handle"><span class="__cf_email__" data-cfemail="2841464e47685b475d5a4b4d44515c49444d465c064b4745">[email&#160;protected]</span></span></span><span class="arrow">→</span></a>
       </div>
     </div>
 
@@ -2903,6 +2961,7 @@
       </span>
       <span>People first, always.</span>
     </div>
+
   </footer>
 
   <!-- CONTACT MODAL -->
@@ -2966,10 +3025,28 @@
     const submitBtn = document.getElementById('submitBtn');
     const status = document.getElementById('formStatus');
     const tyToast = document.getElementById('tyToast');
+    const tyBar   = document.getElementById('tyProgressBar');
     function showToast() {
       if (!tyToast) return;
+      // Reset
+      if (tyBar) { tyBar.classList.remove('is-counting'); void tyBar.offsetWidth; }
       tyToast.classList.add('is-visible');
-      setTimeout(() => { tyToast.classList.remove('is-visible'); }, 3000);
+      // Start countdown bar
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          if (tyBar) tyBar.classList.add('is-counting');
+        });
+      });
+      // Auto-dismiss after 3s
+      setTimeout(() => {
+        tyToast.classList.remove('is-visible');
+      }, 3200);
+    }
+    // Click overlay to dismiss early
+    if (tyToast) {
+      tyToast.addEventListener('click', e => {
+        if (e.target === tyToast) tyToast.classList.remove('is-visible');
+      });
     }
 
     function openModal() {
@@ -3294,6 +3371,23 @@
     prevArrow?.addEventListener('click', () => step(-1));
     nextArrow?.addEventListener('click', () => step(1));
 
+    // ── Nav logo fades out when footer logo scrolls into view ──────────────
+    (function() {
+      const footLogo = document.querySelector('.foot-logo img');
+      const navLogo  = document.querySelector('.rail-logo img');
+      if (!footLogo || !navLogo) return;
+      const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            navLogo.style.opacity = '0';
+          } else {
+            navLogo.style.opacity = navLogo.classList.contains('is-visible') ? '1' : '0';
+          }
+        });
+      }, { threshold: 0.2 });
+      obs.observe(footLogo);
+    })();
+
     // Keyboard ← / → also flips tabs (skip when typing in inputs/textareas)
     document.addEventListener('keydown', e => {
       if (e.target.closest('input, textarea, select, [contenteditable]')) return;
@@ -3340,14 +3434,56 @@
       const initial = (location.hash || '').replace('#', '');
       activateTab(VALID_TABS.includes(initial) ? initial : 'proof', { skipHash: true, skipScroll: true, skipFade: true, force: true });
     }
+  
+    // ── Dismiss preloader once page is ready ──
+    (function() {
+      // Min time: let the heartbeat animation play (1.9s animation + 0.15s delay ≈ 2.1s)
+      const MIN_MS = 2200;
+      const startTime = performance.now();
+
+      function hidePreloader() {
+        const el  = document.getElementById('preloader');
+        const img = document.getElementById('preloader-logo');
+        const navLogo = document.querySelector('.rail-logo img');
+        if (!el) return;
+
+        const elapsed  = performance.now() - startTime;
+        const wait     = Math.max(0, MIN_MS - elapsed);
+
+        setTimeout(() => {
+          // Trigger logo exit animation
+          if (img) img.classList.add('is-exiting');
+          // Start fading preloader slightly after logo exit starts
+          setTimeout(() => {
+            el.classList.add('is-exiting');
+            // Reveal nav logo in sync with preloader fade
+            if (navLogo) navLogo.classList.add('is-visible');
+          }, 80);
+          // Fully hide preloader after fade completes
+          setTimeout(() => { el.classList.add('hidden'); }, 700);
+        }, wait);
+      }
+
+      if (document.readyState === 'complete') {
+        hidePreloader();
+      } else {
+        window.addEventListener('load', hidePreloader);
+      }
+    })();
+
   </script>
 
-  <!-- THANK YOU TOAST -->
-  <div class="ty-toast" id="tyToast" role="status" aria-live="polite">
-    <div class="ty-toast-icon">&#10003;</div>
-    <div>
-      <div class="ty-toast-title">Thank you!</div>
-      <div class="ty-toast-msg">We'll get back to you within 1 business day.</div>
+  <!-- THANK YOU MODAL -->
+  <div class="ty-modal-overlay" id="tyToast" role="dialog" aria-modal="true" aria-label="Thank you">
+    <div class="ty-modal-card">
+      <img src="uploads/Sourcely_Icon2_LogoV2.png" class="ty-modal-smile" alt="" aria-hidden="true" />
+      <img src="uploads/Logo_Icon-83d69e9c.png" class="ty-modal-logo" alt="Sourcely Talent" />
+      <h2 class="ty-modal-title">Thank you!</h2>
+      <hr class="ty-modal-divider" />
+      <p class="ty-modal-msg">We got your message. <strong>We'll be in touch within 1 business day.</strong></p>
+      <div class="ty-modal-progress">
+        <div class="ty-modal-progress-bar" id="tyProgressBar"></div>
+      </div>
     </div>
   </div>
 
