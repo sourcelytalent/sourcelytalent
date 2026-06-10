@@ -1798,7 +1798,6 @@
       .foot-contact { flex-direction: row; justify-content: flex-start; padding: 28px 20px 0; gap: 24px; }
       .foot-bottom { padding: 22px 20px 0; flex-direction: column; gap: 8px; }
       .form-row.split { grid-template-columns: 1fr; }
-      .modal { padding: 32px 24px 28px; }
     }
 
     /* ───── Cities banner ───── */
@@ -2407,14 +2406,33 @@
       .btn-primary { width: 100%; justify-content: center; }
     }
 
-    /* ── Mobile: modal full-width bottom sheet ── */
-    @media (max-width: 500px) {
-      .modal { align-items: flex-end; padding: 0; }
-      .modal-inner {
-        border-radius: 20px 20px 0 0;
-        max-height: 94dvh;
-        padding: 22px 18px 28px;
+    /* ── Mobile: modal bottom sheet ── */
+    @media (max-width: 640px) {
+      .modal-overlay {
+        align-items: flex-end;
+        padding: 0;
       }
+      .modal {
+        width: 100%;
+        max-width: 100%;
+        border-radius: 20px 20px 0 0;
+        max-height: 88dvh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 28px 22px 36px;
+      }
+      .modal h2 { font-size: 1.4rem; }
+      .modal-sub { font-size: 0.88rem; margin-bottom: 16px; }
+      .modal-founder { margin-bottom: 14px; padding-bottom: 14px; }
+      .modal-founder-photo { width: 68px; height: 68px; }
+      .modal-founder-name { font-size: 0.95rem; }
+      .modal-founder-role { font-size: 0.68rem; }
+      .form-row { margin-bottom: 10px; }
+      .form-row input,
+      .form-row select,
+      .form-row textarea { font-size: 1rem; padding: 11px 13px; }
+      .file-label { padding: 13px; font-size: 0.84rem; }
+      .btn-primary { width: 100%; justify-content: center; font-size: 0.95rem; padding: 15px 20px; }
     }
 
     /* ── Mobile: footer ── */
@@ -3237,17 +3255,16 @@
       }
     }
 
-    // ── Scrollspy: highlight rail tab only when hero has scrolled out of view ──
+    // ── Scrollspy: highlight rail tabs only after hero h1 leaves viewport ──
     if (rail && 'IntersectionObserver' in window) {
-      const hero = document.querySelector('.hero');
-      if (hero) {
+      const heroH1 = document.querySelector('.hero h1');
+      if (heroH1) {
         const heroIO = new IntersectionObserver(entries => {
           entries.forEach(e => {
-            // past-hero = hero is no longer intersecting the viewport
             rail.classList.toggle('past-hero', !e.isIntersecting);
           });
-        }, { threshold: 0.15 });
-        heroIO.observe(hero);
+        }, { threshold: 0, rootMargin: '0px 0px 0px 0px' });
+        heroIO.observe(heroH1);
       }
     }
 
