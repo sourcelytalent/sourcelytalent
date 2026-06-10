@@ -774,6 +774,19 @@
     }
     .c1-col a:last-child { border-bottom: none; }
     .c1-col a:hover { color: var(--teal); }
+    .foot-contact-email {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #fff;
+      font-family: 'Asap', sans-serif;
+      font-weight: 700;
+      font-size: 0.96rem;
+      padding: 13px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      user-select: text;
+    }
+    .foot-contact-email:last-child { border-bottom: none; }
     .c1-col .handle {
       font-family: 'Asap', sans-serif;
       font-size: 0.74rem;
@@ -1903,28 +1916,35 @@
       .rail-tabs::-webkit-scrollbar { display: none; }
       .rail-tab { padding: 7px 10px; font-size: 0.62rem; }
     }
-    /* Mobile: scrollable tab strip — no marquee, just swipe/scroll */
+    /* Mobile: cycling marquee nav — tappable, infinite loop */
     @media (max-width: 720px) {
       .rail-tabs {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-        padding: 0 12px;
+        overflow: hidden;
+        padding: 0;
         justify-content: flex-start;
-        scroll-snap-type: x mandatory;
+        position: relative;
+        mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
       }
-      .rail-tabs::-webkit-scrollbar { display: none; }
       .rail-tabs-track {
         display: flex;
         align-items: center;
         gap: 0;
         width: max-content;
-        /* no animation */
+        animation: rail-cycle 20s linear infinite;
+        will-change: transform;
+      }
+      .rail-tabs:hover .rail-tabs-track,
+      .rail-tabs:focus-within .rail-tabs-track {
+        animation-play-state: paused;
       }
       .rail-tab {
         padding: 7px 14px;
-        scroll-snap-align: start;
         flex-shrink: 0;
+      }
+      @keyframes rail-cycle {
+        from { transform: translateX(0); }
+        to   { transform: translateX(-50%); }
       }
     }
 
@@ -2448,13 +2468,13 @@
       100% { opacity: 0; transform: scale(0.28) translateY(36px); }
     }
 
-    /* Nav logo starts invisible, fades in on preloader exit */
-    .rail-logo img {
-      opacity: 0;
-      transition: opacity 0.5s ease 0.1s;
+    /* Rail-logo visibility is driven entirely by --m-vis and .footer-in-view */
+    .rail-logo {
+      transition: opacity 0.45s ease, transform 0.45s ease;
     }
-    .rail-logo img.is-visible {
-      opacity: 1;
+    .rail-logo.footer-in-view {
+      opacity: 0 !important;
+      pointer-events: none;
     }
 
   </style>
@@ -2493,7 +2513,7 @@
   <div class="rail-host">
     <header class="rail" role="navigation" aria-label="Primary">
       <a href="#proof" class="rail-logo" aria-label="Sourcely Talent — home" data-tab-link="proof">
-        <img src="assets/sourcely-mark.png" alt="Sourcely Talent" />
+        <img src="uploads/Logo_Icon-83d69e9c.png" alt="Sourcely Talent" />
       </a>
       <nav class="rail-tabs" role="tablist">
         <button type="button" class="rail-tab" role="tab" data-tab-link="proof" aria-controls="tab-proof"><span class="tab-num">01</span>Proof</button>
@@ -2987,7 +3007,7 @@
         <div class="c1-col-eye">Connect</div>
         <a href="https://www.linkedin.com/in/richie-perez/" target="_blank" rel="noopener"><span>Richie Peréz<br/><span class="handle">linkedin.com/in/richie-perez</span></span><span class="arrow">→</span></a>
         <a href="https://www.linkedin.com/company/sourcely-talent" target="_blank" rel="noopener"><span>Sourcely Talent<br/><span class="handle">linkedin.com/company/sourcelytalent</span></span><span class="arrow">→</span></a>
-        <span class="foot-contact-email"><span>Email<br/><span class="handle">info <!-- -->@<!-- -->sourcelytalent.com</span></span></span>
+        <span class="foot-contact-email"><span>Email<br/><span class="handle">info<!-- -->@<!-- -->sourcelytalent.com</span></span></span>
       </div>
     </div>
 
@@ -3217,18 +3237,18 @@
       }
     }
 
-    // ── Scrollspy: highlight rail tab only when its section eyebrow is in view ──
+    // ── Scrollspy: highlight rail tab only when hero has scrolled out of view ──
     if (rail && 'IntersectionObserver' in window) {
-      const eyebrows = document.querySelectorAll('.eyebrow[data-spy-target]');
-      const visible = new Set();
-      const spyIO = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-          if (e.isIntersecting) visible.add(e.target);
-          else visible.delete(e.target);
-        });
-        rail.classList.toggle('past-hero', visible.size > 0);
-      }, { rootMargin: '-80px 0px 0px 0px', threshold: 0 });
-      eyebrows.forEach(el => spyIO.observe(el));
+      const hero = document.querySelector('.hero');
+      if (hero) {
+        const heroIO = new IntersectionObserver(entries => {
+          entries.forEach(e => {
+            // past-hero = hero is no longer intersecting the viewport
+            rail.classList.toggle('past-hero', !e.isIntersecting);
+          });
+        }, { threshold: 0.15 });
+        heroIO.observe(hero);
+      }
     }
 
     // ── Mobile rail-tabs marquee: wrap tabs in a track + clone for seamless loop ──
@@ -3421,20 +3441,16 @@
     prevArrow?.addEventListener('click', () => step(-1));
     nextArrow?.addEventListener('click', () => step(1));
 
-    // ── Nav logo fades out when footer logo scrolls into view ──────────────
+    // ── Nav logo fades out when footer wordmark scrolls into view ─────────
     (function() {
       const footLogo = document.querySelector('.foot-logo img');
-      const navLogo  = document.querySelector('.rail-logo img');
-      if (!footLogo || !navLogo) return;
+      const railLogo = document.querySelector('.rail-logo');
+      if (!footLogo || !railLogo) return;
       const obs = new IntersectionObserver(entries => {
         entries.forEach(e => {
-          if (e.isIntersecting) {
-            navLogo.style.opacity = '0';
-          } else {
-            navLogo.style.opacity = navLogo.classList.contains('is-visible') ? '1' : '0';
-          }
+          railLogo.classList.toggle('footer-in-view', e.isIntersecting);
         });
-      }, { threshold: 0.2 });
+      }, { threshold: 0.15 });
       obs.observe(footLogo);
     })();
 
@@ -3506,8 +3522,7 @@
           // Start fading preloader slightly after logo exit starts
           setTimeout(() => {
             el.classList.add('is-exiting');
-            // Reveal nav logo in sync with preloader fade
-            if (navLogo) navLogo.classList.add('is-visible');
+            // Nav logo reveal is now driven by --m-vis CSS variable; no class needed
           }, 80);
           // Fully hide preloader after fade completes
           setTimeout(() => { el.classList.add('hidden'); }, 700);
