@@ -1915,35 +1915,29 @@
       .rail-tabs::-webkit-scrollbar { display: none; }
       .rail-tab { padding: 7px 10px; font-size: 0.62rem; }
     }
-    /* Mobile: cycling marquee nav — tappable, infinite loop */
+    /* Mobile: cycling nav — JS-driven scroll, touch-draggable */
     @media (max-width: 720px) {
       .rail-tabs {
-        overflow: hidden;
+        overflow-x: scroll;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
         padding: 0;
         justify-content: flex-start;
         position: relative;
-        mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
-        -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+        mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
       }
+      .rail-tabs::-webkit-scrollbar { display: none; }
       .rail-tabs-track {
         display: flex;
         align-items: center;
         gap: 0;
         width: max-content;
-        animation: rail-cycle 20s linear infinite;
-        will-change: transform;
-      }
-      .rail-tabs:hover .rail-tabs-track,
-      .rail-tabs:focus-within .rail-tabs-track {
-        animation-play-state: paused;
+        /* No CSS animation — JS drives scrollLeft */
       }
       .rail-tab {
         padding: 7px 14px;
         flex-shrink: 0;
-      }
-      @keyframes rail-cycle {
-        from { transform: translateX(0); }
-        to   { transform: translateX(-50%); }
       }
     }
 
@@ -2554,7 +2548,7 @@
         <em>You need the right hir<img class="smile-e" src="uploads/Sourcely_Icon2_LogoV2.png" alt="e" />.</em>
       </h1>
       <p class="hero-tag">
-        When you need a senior technology hire who actually moves the work forward, we find them for you. We source across engineering, Machine Learning and AI (ML/AI), product, research, GoToMarket (GTM), and the C-suite. Artificial Intelligence (AI) accelerates the search. Experienced humans run every calibration.
+        We specialize in senior Data, AI/ML, and Engineering talent and the technical GTM leaders who bring those capabilities to market. The roles that are hardest to fill and most expensive to get wrong. That’s all we do and we do it well.
       </p>
       <div class="hero-cta-row">
         <button class="btn-primary" data-contact-trigger>
@@ -3268,21 +3262,58 @@
       }
     }
 
-    // ── Mobile rail-tabs marquee: wrap tabs in a track + clone for seamless loop ──
+    // ── Mobile rail: finger-draggable + auto-cycles after 3s idle ─────────────
     (function setupMobileTabsMarquee() {
       const railTabs = document.querySelector('.rail-tabs');
       if (!railTabs) return;
       const mq = window.matchMedia('(max-width: 720px)');
       let activated = false;
+      let rafId = null;
+      let resumeTimer = null;
+      let userActive = false;
+      const SPEED = 0.55; // px per frame ~33fps
+      const RESUME_MS = 3000;
+
+      function getHalfWidth() {
+        const track = railTabs.querySelector('.rail-tabs-track');
+        return track ? track.scrollWidth / 2 : 0;
+      }
+
+      function tick() {
+        if (userActive) return;
+        const half = getHalfWidth();
+        if (!half) { rafId = requestAnimationFrame(tick); return; }
+        railTabs.scrollLeft += SPEED;
+        if (railTabs.scrollLeft >= half) railTabs.scrollLeft -= half;
+        rafId = requestAnimationFrame(tick);
+      }
+
+      function startScroll() {
+        cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(tick);
+      }
+
+      function onInteractStart() {
+        userActive = true;
+        cancelAnimationFrame(rafId);
+        clearTimeout(resumeTimer);
+      }
+
+      function onInteractEnd() {
+        clearTimeout(resumeTimer);
+        resumeTimer = setTimeout(() => {
+          userActive = false;
+          startScroll();
+        }, RESUME_MS);
+      }
 
       function activate() {
         if (activated) return;
-        const buttons = Array.from(railTabs.querySelectorAll('.rail-tab'));
+        const buttons = Array.from(railTabs.querySelectorAll('.rail-tab:not([data-clone])'));
         if (!buttons.length) return;
         const track = document.createElement('div');
         track.className = 'rail-tabs-track';
         buttons.forEach(b => track.appendChild(b));
-        // Clone for seamless marquee loop
         buttons.forEach(b => {
           const c = b.cloneNode(true);
           c.setAttribute('aria-hidden', 'true');
@@ -3292,13 +3323,19 @@
         });
         railTabs.appendChild(track);
         activated = true;
+        railTabs.addEventListener('touchstart', onInteractStart, { passive: true });
+        railTabs.addEventListener('touchend',   onInteractEnd,   { passive: true });
+        railTabs.addEventListener('mousedown',  onInteractStart);
+        railTabs.addEventListener('mouseup',    onInteractEnd);
+        startScroll();
       }
 
       function deactivate() {
         if (!activated) return;
+        cancelAnimationFrame(rafId);
+        clearTimeout(resumeTimer);
         const track = railTabs.querySelector('.rail-tabs-track');
         if (!track) return;
-        // Remove clones, lift originals back to railTabs
         track.querySelectorAll('[data-clone]').forEach(el => el.remove());
         while (track.firstChild) railTabs.appendChild(track.firstChild);
         track.remove();
@@ -3306,9 +3343,7 @@
       }
 
       if (mq.matches) activate();
-      mq.addEventListener('change', e => {
-        if (e.matches) activate(); else deactivate();
-      });
+      mq.addEventListener('change', e => { if (e.matches) activate(); else deactivate(); });
     })();
 
     // ── Tuck the floating nav away when the footer enters the viewport ──
