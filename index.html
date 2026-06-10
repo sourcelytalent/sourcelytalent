@@ -1548,6 +1548,7 @@
     .modal-overlay {
       position: fixed; inset: 0;
       background: rgba(0, 62, 84, 0.45);
+      z-index: 300;
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       z-index: 200;
@@ -2986,7 +2987,7 @@
         <div class="c1-col-eye">Connect</div>
         <a href="https://www.linkedin.com/in/richie-perez/" target="_blank" rel="noopener"><span>Richie Peréz<br/><span class="handle">linkedin.com/in/richie-perez</span></span><span class="arrow">→</span></a>
         <a href="https://www.linkedin.com/company/sourcely-talent" target="_blank" rel="noopener"><span>Sourcely Talent<br/><span class="handle">linkedin.com/company/sourcelytalent</span></span><span class="arrow">→</span></a>
-        <a href="/cdn-cgi/l/email-protection#3a53545c557a49554f48595f56434e5b565f544e14595557"><span>Email<br/><span class="handle"><span class="__cf_email__" data-cfemail="9ef7f0f8f1deedf1ebecfdfbf2e7eafff2fbf0eab0fdf1f3">[email&#160;protected]</span></span></span><span class="arrow">→</span></a>
+        <a href="/cdn-cgi/l/email-protection#d4bdbab2bb94a7bba1a6b7b1b8ada0b5b8b1baa0fab7bbb9"><span>Email<br/><span class="handle"><span class="__cf_email__" data-cfemail="d0b9beb6bf90a3bfa5a2b3b5bca9a4b1bcb5bea4feb3bfbd">[email&#160;protected]</span></span></span><span class="arrow">→</span></a>
       </div>
     </div>
 
@@ -3117,29 +3118,26 @@
 
     form.addEventListener('submit', async e => {
       e.preventDefault();
-      status.className = 'form-status';
       submitBtn.disabled = true;
       submitBtn.textContent = 'Sending…';
       const data = new FormData(form);
+
+      // Show thank you immediately — optimistic UI, don’t make user wait on network
+      form.reset();
+      fileLabel.innerHTML = '<strong>Choose a file</strong> or leave blank';
+      status.className = 'form-status';
+      closeModal();
+      setTimeout(() => showToast(), 420);
+
+      // Deliver email in background
       try {
-        const res = await fetch('https://formsubmit.co/ajax/info@sourcelytalent.com', {
+        await fetch('https://formsubmit.co/ajax/info@sourcelytalent.com', {
           method: 'POST',
           headers: { 'Accept': 'application/json' },
           body: data
         });
-        const json = await res.json();
-        if (res.ok && (json.success === 'true' || json.success === true)) {
-          form.reset();
-          fileLabel.innerHTML = '<strong>Choose a file</strong> or leave blank';
-          status.className = 'form-status';
-          closeModal();
-          showToast();
-        } else {
-          throw new Error(json.message || 'Something went wrong.');
-        }
       } catch (err) {
-        status.textContent = 'Couldn\u2019t send right now. Please email info@sourcelytalent.com directly.';
-        status.className = 'form-status error';
+        console.warn('FormSubmit delivery error:', err);
       } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = 'Send message';
